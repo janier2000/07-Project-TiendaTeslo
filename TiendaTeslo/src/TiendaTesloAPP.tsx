@@ -1,7 +1,6 @@
+import { RouterProvider } from "react-router";
+import { EnrutadorAPP } from "./ruta/EnrutadorAPP";
+
 export function TiendaTesloAPP() {
-  return (
-    <div>
-      <h1>tienda teslo</h1>
-    </div>
-  );
+  return <RouterProvider router={EnrutadorAPP} />;
 }
