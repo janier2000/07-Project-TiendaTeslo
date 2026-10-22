@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-export function TiendaHeader() {
+export function Header() {
   const [cartCount] = useState(3);
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur bg-slate-50">

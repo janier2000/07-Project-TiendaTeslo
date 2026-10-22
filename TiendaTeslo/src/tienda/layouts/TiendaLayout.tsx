@@ -1,13 +1,15 @@
 import { Outlet } from "react-router";
 import { Button } from "@/components/ui/button";
-import { TiendaHeader } from "@/tienda/components/tiendaHeader";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 export function TiendaLayout() {
   return (
     <div className="min-h-screen bg-background">
-      <TiendaHeader></TiendaHeader>
+      <Header></Header>
       <Outlet />
       <Button> prueba </Button>
+      <Footer></Footer>
     </div>
   );
 }
