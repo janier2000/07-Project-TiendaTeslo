@@ -1,4 +1,5 @@
 import { Search, Menu } from "lucide-react";
+import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRef } from "react";
@@ -31,14 +32,7 @@ export function Header() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
-            <h1 className="text-xl font-semibold tracking-tight">
-              TIENDA ONLINE TESLA
-            </h1>
-          </div>
+          <Logo />
 
           {/* Navegación - Escritorio */}
           <nav className="hidden md:flex items-center space-x-8">

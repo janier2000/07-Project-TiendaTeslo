@@ -1,3 +1,5 @@
+import { Logo } from "@/components/Logo";
+
 export function Footer() {
   return (
     <div>
@@ -5,7 +7,7 @@ export function Footer() {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="font-semibold mb-4">TESLA STYLE</h3>
+              <Logo subtitulo="Comercio" />
               <p className="text-sm text-muted-foreground">
                 Ropa inspirada en el diseño minimalista y la innovación de
                 Tesla.
