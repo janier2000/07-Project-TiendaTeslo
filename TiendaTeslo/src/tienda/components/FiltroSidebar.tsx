@@ -2,29 +2,30 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { useSearchParams } from "react-router";
 
 export function FiltroSidebar() {
-  const categories = [
-    { id: "tshirts", label: "Camisetas", count: 12 },
-    { id: "hoodies", label: "Sudaderas", count: 8 },
-    { id: "jackets", label: "Chaquetas", count: 6 },
-    { id: "accessories", label: "Accesorios", count: 15 },
-  ];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const lstTallasActual = searchParams.get("lstTallas")?.split(",") || []; // xs,l,xl
+  const precioActual = searchParams.get("precio") || "any";
 
-  const sizes = [
+  const handleClickTallas = (talla: string) => {
+    const lstTallasActualAux = lstTallasActual.includes(talla)
+      ? lstTallasActual.filter((s) => s !== talla)
+      : [...lstTallasActual, talla];
+
+    searchParams.set("pagina", "1");
+    searchParams.set("lstTallas", lstTallasActualAux.join(","));
+    setSearchParams(searchParams);
+  };
+
+  const GrupoTallas = [
     { id: "xs", label: "XS" },
     { id: "s", label: "S" },
     { id: "m", label: "M" },
     { id: "l", label: "L" },
     { id: "xl", label: "XL" },
     { id: "xxl", label: "XXL" },
-  ];
-
-  const colors = [
-    { id: "black", label: "Negro", color: "bg-black" },
-    { id: "white", label: "Blanco", color: "bg-white border" },
-    { id: "grey", label: "Gris", color: "bg-gray-400" },
-    { id: "navy", label: "Azul Marino", color: "bg-blue-900" },
   ];
 
   return (
@@ -37,9 +38,17 @@ export function FiltroSidebar() {
       <div className="space-y-4">
         <h4 className="font-medium">Tallas</h4>
         <div className="grid grid-cols-3 gap-2">
-          {sizes.map((size) => (
-            <Button key={size.id} variant="outline" size="sm" className="h-8">
-              {size.label}
+          {GrupoTallas.map((talla) => (
+            <Button
+              key={talla.id}
+              variant={
+                lstTallasActual.includes(talla.id) ? "default" : "outline"
+              }
+              size="sm"
+              className="h-8"
+              onClick={() => handleClickTallas(talla.id)}
+            >
+              {talla.label}
             </Button>
           ))}
         </div>
@@ -47,7 +56,7 @@ export function FiltroSidebar() {
 
       <Separator />
 
-      {/* Price Range */}
+      {/* rango precio */}
       <div className="space-y-4">
         <h4 className="font-medium">Precio</h4>
         <RadioGroup defaultValue="" className="space-y-3">

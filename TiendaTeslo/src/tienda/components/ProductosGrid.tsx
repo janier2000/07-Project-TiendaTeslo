@@ -3,12 +3,23 @@ import type { Product } from "@/mocks/productosMock";
 import { ChevronLeft, ChevronRight, Filter, Grid, List } from "lucide-react";
 import { ProductoCard } from "./ProductoCard";
 import { FiltroSidebar } from "./FiltroSidebar";
+import { useSearchParams } from "react-router";
+import { useState } from "react";
 
 interface Props {
   LstProductos: Product[];
 }
 
 export function ProductosGrid({ LstProductos }: Props) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [mostrarFiltros, setMostrarFiltros] = useState(false);
+  const ModoVisualizacion = searchParams.get("viewMode") || "grid";
+
+  function handleClickModoVisualizacion(modo: "grid" | "list") {
+    searchParams.set("viewMode", modo);
+    setSearchParams(searchParams);
+  }
+
   return (
     <div>
       <section className="py-12 px-4 lg:px-8">
@@ -25,7 +36,7 @@ export function ProductosGrid({ LstProductos }: Props) {
               <Button
                 variant="outline"
                 size="sm"
-                // onClick={() => setShowFilters(!showFilters)}
+                onClick={() => setMostrarFiltros(!mostrarFiltros)}
                 className="lg:hidden"
               >
                 <Filter className="h-4 w-4 mr-2" />
@@ -34,17 +45,17 @@ export function ProductosGrid({ LstProductos }: Props) {
 
               <div className="hidden md:flex border rounded-md">
                 <Button
-                  //   variant={viewMode === "grid" ? "default" : "ghost"}
+                  variant={ModoVisualizacion === "grid" ? "default" : "ghost"}
                   size="sm"
-                  //   onClick={() => setViewMode("grid")}
+                  onClick={() => handleClickModoVisualizacion("grid")}
                   className="rounded-r-none"
                 >
                   <Grid className="h-4 w-4" />
                 </Button>
                 <Button
-                  //   variant={viewMode === "list" ? "default" : "ghost"}
+                  variant={ModoVisualizacion === "list" ? "default" : "ghost"}
                   size="sm"
-                  //   onClick={() => setViewMode("list")}
+                  onClick={() => handleClickModoVisualizacion("list")}
                   className="rounded-l-none"
                 >
                   <List className="h-4 w-4" />
@@ -60,30 +71,29 @@ export function ProductosGrid({ LstProductos }: Props) {
             </div>
 
             {/* Mobile Filters */}
-            {/* {showFilters && ( */}
-            <div className="fixed inset-0 z-50 bg-background p-4 lg:hidden">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold">Filtros</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  // onClick={() => setShowFilters(false)}
-                >
-                  Cerrar
-                </Button>
+            {mostrarFiltros && (
+              <div className="fixed inset-0 z-50 bg-background p-4 lg:hidden">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold">Filtros</h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setMostrarFiltros(false)}
+                  >
+                    Cerrar
+                  </Button>
+                </div>
+                <FiltroSidebar />
               </div>
-              <FiltroSidebar />
-            </div>
-            {/* )} */}
+            )}
 
             {/* Products Grid */}
             <div className="flex-1">
               <div
                 className={
-                  //   viewMode === "grid"
-                  //     ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                  //     : "space-y-4"
-                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                  ModoVisualizacion === "grid"
+                    ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                    : "space-y-4"
                 }
               >
                 {LstProductos.map((product) => (
