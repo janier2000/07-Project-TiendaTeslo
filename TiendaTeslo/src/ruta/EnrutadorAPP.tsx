@@ -10,9 +10,11 @@ import { DashboardPage } from "../administrador/pages/dashboard/DashboardPage";
 import { AdminProductosIndexPage } from "../administrador/pages/ProductosIndex/AdminProductosIndexPage";
 import { AdminProductoPage } from "../administrador/pages/producto/AdminProductoPage";
 
-// aca para esto funcione toca hacer el cambio a export default en AutorizacionLayout.tsx
 const AutorizacionLayout = lazy(
-  () => import("../autorizacion/layouts/AutorizacionLayout"),
+  () =>
+    import("../autorizacion/layouts/AutorizacionLayout").then(
+      ({ AutorizacionLayout }) => ({ default: AutorizacionLayout }),
+    ),
 );
 const AdministradorLayout = lazy(
   () => import("../administrador/layouts/AdministradorLayout"),
