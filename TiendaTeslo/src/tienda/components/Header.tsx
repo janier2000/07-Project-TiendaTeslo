@@ -1,10 +1,29 @@
 import { Search, ShoppingBag, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useSearchParams } from "react-router";
 
 export function Header() {
-  const [cartCount] = useState(3);
+  const [cantidadEnElCarrito] = useState(40);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const consultaParametro = searchParams.get("consulta") || "";
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleKeyDownBuscar(evento: React.KeyboardEvent<HTMLInputElement>) {
+    if (evento.key !== "Enter") {
+      return;
+    }
+    const consultaAux = new URLSearchParams();
+    const inputConsulta = inputRef.current?.value;
+    if (!inputConsulta) {
+      consultaAux.delete("consulta");
+    } else {
+      consultaAux.set("consulta", inputConsulta);
+    }
+    setSearchParams(consultaAux);
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur bg-slate-50">
       <div className="container mx-auto px-4 lg:px-8">
@@ -47,14 +66,17 @@ export function Header() {
             </a>
           </nav>
 
-          {/* Search and Cart */}
+          {/* Búsqueda y carrito */}
           <div className="flex items-center space-x-4">
             <div className="hidden md:flex items-center space-x-2">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
+                  ref={inputRef}
                   placeholder="Buscar productos..."
-                  className="pl-9 w-64 h-9"
+                  className="pl-9 w-64 h-9 bg-white"
+                  onKeyDown={handleKeyDownBuscar}
+                  defaultValue={consultaParametro}
                 />
               </div>
             </div>
@@ -65,9 +87,9 @@ export function Header() {
 
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingBag className="h-5 w-5" />
-              {cartCount > 0 && (
+              {cantidadEnElCarrito > 0 && (
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
-                  {cartCount}
+                  {cantidadEnElCarrito}
                 </span>
               )}
             </Button>
