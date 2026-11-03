@@ -85,7 +85,7 @@ export function AccesoPage() {
               <div className="text-center text-sm">
                 ¿No tienes cuenta?{" "}
                 <Link
-                  to="/auth/register"
+                  to="/autorizacion/registro"
                   className="underline underline-offset-4"
                 >
                   Crea una
