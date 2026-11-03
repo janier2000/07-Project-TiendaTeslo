@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router";
 export function FiltroSidebar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const lstTallasActual = searchParams.get("lstTallas")?.split(",") || []; // xs,l,xl
-  const precioActual = searchParams.get("precio") || "any";
+  const precioActual = searchParams.get("precio") || "cualquier";
 
   const handleClickTallas = (talla: string) => {
     const lstTallasActualAux = lstTallasActual.includes(talla)
@@ -65,59 +65,41 @@ export function FiltroSidebar() {
       {/* rango precio */}
       <div className="space-y-4">
         <h4 className="font-medium">Precio</h4>
-        <RadioGroup defaultValue="" className="space-y-3">
+        <RadioGroup
+          value={precioActual}
+          onValueChange={handlePriceChange}
+          className="space-y-3"
+        >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="cualquier"
-              id="priceAny"
-              checked={precioActual === "cualquier"}
-              onClick={() => handlePriceChange("cualquier")}
-            />
-            <Label htmlFor="priceAny" className="text-sm cursor-pointer">
+            <RadioGroupItem value="cualquier" id="precioCualquiera" />
+            <Label
+              htmlFor="precioCualquiera"
+              className="text-sm cursor-pointer"
+            >
               Cualquier precio
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="0-50"
-              id="price1"
-              checked={precioActual === "0-50"}
-              onClick={() => handlePriceChange("0-50")}
-            />
-            <Label htmlFor="price1" className="text-sm cursor-pointer">
+            <RadioGroupItem value="0-50" id="precio1" />
+            <Label htmlFor="precio1" className="text-sm cursor-pointer">
               $0 - $50
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="50-100"
-              id="price2"
-              checked={precioActual === "50-100"}
-              onClick={() => handlePriceChange("50-100")}
-            />
-            <Label htmlFor="price2" className="text-sm cursor-pointer">
+            <RadioGroupItem value="50-100" id="precio2" />
+            <Label htmlFor="precio2" className="text-sm cursor-pointer">
               $50 - $100
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="100-200"
-              id="price3"
-              checked={precioActual === "100-200"}
-              onClick={() => handlePriceChange("100-200")}
-            />
-            <Label htmlFor="price3" className="text-sm cursor-pointer">
+            <RadioGroupItem value="100-200" id="precio3" />
+            <Label htmlFor="precio3" className="text-sm cursor-pointer">
               $100 - $200
             </Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="200+"
-              id="price4"
-              checked={precioActual === "200+"}
-              onClick={() => handlePriceChange("200+")}
-            />
-            <Label htmlFor="price4" className="text-sm cursor-pointer">
+            <RadioGroupItem value="200+" id="precio4" />
+            <Label htmlFor="precio4" className="text-sm cursor-pointer">
               $200+
             </Label>
           </div>
