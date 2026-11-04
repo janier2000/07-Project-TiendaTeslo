@@ -93,7 +93,7 @@ export function Header() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <Link to="/autorizacion/acceso">
+            <Link to="/auth/acceso">
               <Button variant="default" size="sm" className="ml-2">
                 Acceso
               </Button>

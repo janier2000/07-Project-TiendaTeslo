@@ -1,11 +1,11 @@
-import { Logo } from "@/components/Logo";
 import { Card, CardContent } from "@/components/ui/card";
+import { Logo } from "@/components/Logo";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
-export function RegistroPage() {
+export function AccesoPage() {
   return (
     <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0  ">
@@ -16,19 +16,9 @@ export function RegistroPage() {
                 <Logo />
 
                 <p className="text-balance text-muted-foreground">
-                  Crea una nueva cuenta
+                  Ingrese a nuestra aplicación
                 </p>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="fullName">Nombre completo</Label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  placeholder="Nombre completo"
-                  required
-                />
-              </div>
-
               <div className="grid gap-2">
                 <Label htmlFor="email">Correo</Label>
                 <Input
@@ -56,11 +46,11 @@ export function RegistroPage() {
                 />
               </div>
               <Button type="submit" className="w-full">
-                Crear cuenta
+                Ingresar
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">
-                  O ingresa con
+                  O continúa con
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-4">
@@ -93,12 +83,12 @@ export function RegistroPage() {
                 </Button>
               </div>
               <div className="text-center text-sm">
-                ¿Ya tienes cuenta?{" "}
+                ¿No tienes cuenta?{" "}
                 <Link
-                  to="/autorizacion/acceso"
+                  to="/auth/registro"
                   className="underline underline-offset-4"
                 >
-                  Ingresa ahora
+                  Crea una
                 </Link>
               </div>
             </div>

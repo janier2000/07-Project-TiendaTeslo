@@ -4,16 +4,16 @@ import { TiendaLayout } from "../tienda/layouts/TiendaLayout";
 import { InicioPage } from "../tienda/pages/inicio/InicioPage";
 import { ProductoPage } from "../tienda/pages/producto/ProductoPage";
 import { GeneroPage } from "../tienda/pages/genero/GeneroPage";
-import { AccesoPage } from "../autorizacion/pages/acceso/AccesoPage";
-import { RegistroPage } from "../autorizacion/pages/registro/RegistroPage";
+import { AccesoPage } from "../auth/pages/acceso/AccesoPage";
+import { RegistroPage } from "../auth/pages/registro/RegistroPage";
 import { DashboardPage } from "@/admin/pages/dashboard/DashboardPage";
 import { AdminProductosIndexPage } from "@/admin/pages/ProductosIndex/AdminProductosIndexPage";
 import { AdminProductoPage } from "@/admin/pages/producto/AdminProductoPage";
 
-const AutorizacionLayout = lazy(() =>
-  import("../autorizacion/layouts/AutorizacionLayout").then(
-    ({ AutorizacionLayout }) => ({ default: AutorizacionLayout }),
-  ),
+const AuthLayout = lazy(() =>
+  import("../auth/layouts/AuthLayout").then(({ AuthLayout }) => ({
+    default: AuthLayout,
+  })),
 );
 
 const AdminLayout = lazy(() =>
@@ -45,12 +45,12 @@ export const EnrutadorAPP = createBrowserRouter([
 
   // Rutas de autenticación
   {
-    path: "/autorizacion",
-    element: <AutorizacionLayout />,
+    path: "/auth",
+    element: <AuthLayout />,
     children: [
       {
         index: true,
-        element: <Navigate to="/autorizacion/acceso" />,
+        element: <Navigate to="/auth/acceso" />,
       },
       {
         path: "acceso",
