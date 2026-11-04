@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { AdminSidebar } from "../components/AdminSidebar";
-import { AdminHeader } from "../components/AdminHeader";
+import { AdminSidebar } from "../../admin/components/AdminSidebar";
+import { AdminHeader } from "../../admin/components/AdminHeader";
 import { Outlet } from "react-router";
 
-function AdministradorLayout() {
+export function AdminLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
@@ -22,5 +22,3 @@ function AdministradorLayout() {
     </div>
   );
 }
-
-export default AdministradorLayout;

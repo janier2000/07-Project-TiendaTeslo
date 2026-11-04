@@ -99,7 +99,7 @@ export function Header() {
               </Button>
             </Link>
 
-            <Link to="/administrador">
+            <Link to="/admin">
               <Button variant="destructive" size="sm" className="ml-2">
                 Administrador
               </Button>

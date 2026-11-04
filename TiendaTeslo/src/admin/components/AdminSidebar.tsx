@@ -23,14 +23,14 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
   onToggle,
 }) => {
   const menuItems = [
-    { icon: Home, label: "Dashboard", active: true },
-    { icon: BarChart3, label: "Analytics" },
-    { icon: Users, label: "Users" },
-    { icon: ShoppingCart, label: "Orders" },
-    { icon: FileText, label: "Reports" },
-    { icon: Bell, label: "Notifications" },
-    { icon: Settings, label: "Settings" },
-    { icon: HelpCircle, label: "Help" },
+    { icon: Home, label: "Dashboard", to: "/admin" },
+    { icon: BarChart3, label: "Productos", to: "/admin/products" },
+    { icon: Users, label: "Usuarios" },
+    { icon: ShoppingCart, label: "Ordenes" },
+    { icon: FileText, label: "Reportes" },
+    { icon: Bell, label: "Notificaciones" },
+    { icon: Settings, label: "Ajustes" },
+    { icon: HelpCircle, label: "Ayuda" },
   ];
 
   return (

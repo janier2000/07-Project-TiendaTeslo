@@ -1,8 +1,8 @@
-import ActivityFeed from "@/administrador/components/ActivityFeed";
-import { AdminTitulo } from "@/administrador/components/AdminTitulo";
-import Chart from "@/administrador/components/Chart";
-import QuickActions from "@/administrador/components/QuickActions";
-import StatCard from "@/administrador/components/StatCard";
+import ActivityFeed from "@/admin/components/ActivityFeed";
+import { AdminTitulo } from "@/admin/components/AdminTitulo";
+import Chart from "@/admin/components/Chart";
+import QuickActions from "@/admin/components/QuickActions";
+import StatCard from "@/admin/components/StatCard";
 import {
   Users,
   DollarSign,
