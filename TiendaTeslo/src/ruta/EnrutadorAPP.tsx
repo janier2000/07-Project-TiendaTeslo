@@ -72,8 +72,8 @@ export const EnrutadorAPP = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: "productos",
-        element: <AdminProductosIndexPage />,
+        path: "producto",
+        element: <AdminProductoPage />,
       },
       {
         path: "producto/:id",
