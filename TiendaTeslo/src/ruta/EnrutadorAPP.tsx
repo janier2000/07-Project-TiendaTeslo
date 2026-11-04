@@ -73,7 +73,7 @@ export const EnrutadorAPP = createBrowserRouter([
       },
       {
         path: "producto",
-        element: <AdminProductoPage />,
+        element: <AdminProductosIndexPage />,
       },
       {
         path: "producto/:id",
