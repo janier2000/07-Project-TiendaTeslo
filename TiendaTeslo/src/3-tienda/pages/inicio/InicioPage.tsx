@@ -1,8 +1,8 @@
 import { Paginacion } from "@/components/Paginacion";
 // import { products } from "@/mocks/productosMock";
-import { Jombotron } from "@/tienda/components/Jombotron";
-import { ProductosGrid } from "@/tienda/components/ProductosGrid";
-import { useProductos } from "@/tienda/hooks/useProductos";
+import { Jombotron } from "@/3-tienda/components/Jombotron";
+import { ProductosGrid } from "@/3-tienda/components/ProductosGrid";
+import { useProductos } from "@/3-tienda/hooks/useProductos";
 
 export function InicioPage() {
   const { data } = useProductos();

@@ -1,6 +1,6 @@
 import { Paginacion } from "@/components/Paginacion";
-import { Jombotron } from "@/tienda/components/Jombotron";
-import { ProductosGrid } from "@/tienda/components/ProductosGrid";
+import { Jombotron } from "@/3-tienda/components/Jombotron";
+import { ProductosGrid } from "@/3-tienda/components/ProductosGrid";
 import { products } from "@/mocks/productosMock";
 import { useParams } from "react-router";
 

@@ -1,23 +1,23 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
-import { TiendaLayout } from "../tienda/layouts/TiendaLayout";
-import { InicioPage } from "../tienda/pages/inicio/InicioPage";
-import { ProductoPage } from "../tienda/pages/producto/ProductoPage";
-import { GeneroPage } from "../tienda/pages/genero/GeneroPage";
-import { AccesoPage } from "../auth/pages/acceso/AccesoPage";
-import { RegistroPage } from "../auth/pages/registro/RegistroPage";
-import { DashboardPage } from "@/admin/pages/dashboard/DashboardPage";
-import { AdminProductosIndexPage } from "@/admin/pages/ProductosIndex/AdminProductosIndexPage";
-import { AdminProductoPage } from "@/admin/pages/producto/AdminProductoPage";
+import { TiendaLayout } from "../3-tienda/layouts/TiendaLayout";
+import { InicioPage } from "../3-tienda/pages/inicio/InicioPage";
+import { ProductoPage } from "../3-tienda/pages/producto/ProductoPage";
+import { GeneroPage } from "../3-tienda/pages/genero/GeneroPage";
+import { AccesoPage } from "../2-auth/pages/acceso/AccesoPage";
+import { RegistroPage } from "../2-auth/pages/registro/RegistroPage";
+import { DashboardPage } from "@/1-admin/pages/dashboard/DashboardPage";
+import { AdminProductosIndexPage } from "@/1-admin/pages/ProductosIndex/AdminProductosIndexPage";
+import { AdminProductoPage } from "@/1-admin/pages/producto/AdminProductoPage";
 
 const AuthLayout = lazy(() =>
-  import("../auth/layouts/AuthLayout").then(({ AuthLayout }) => ({
+  import("../2-auth/layouts/AuthLayout").then(({ AuthLayout }) => ({
     default: AuthLayout,
   })),
 );
 
 const AdminLayout = lazy(() =>
-  import("../admin/layouts/AdminLayout").then(({ AdminLayout }) => ({
+  import("../1-admin/layouts/AdminLayout").then(({ AdminLayout }) => ({
     default: AdminLayout,
   })),
 );
