@@ -15,7 +15,7 @@ export function GeneroPage() {
     <>
       <Jombotron titulo={`Productos para ${generoLabel}`}></Jombotron>
       <ProductosGrid LstProductos={data?.products || []}></ProductosGrid>
-      <Paginacion totalPaginas={5}></Paginacion>
+      <Paginacion totalPaginas={data?.pages || 1}></Paginacion>
     </>
   );
 }

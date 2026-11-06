@@ -6,20 +6,19 @@ import { useSearchParams } from "react-router";
 
 export function FiltroSidebar() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const lstTallasActual = searchParams.get("lstTallas")?.split(",") || []; // xs,l,xl
-  const precioActual = searchParams.get("precio") || "cualquier";
+  const lstTallas = searchParams.get("lstTallas")?.split(",") || []; // xs,l,xl
+  const precio = searchParams.get("precio") || "cualquier";
 
-  const handleClickTallas = (talla: string) => {
-    const lstTallasActualAux = lstTallasActual.includes(talla)
-      ? lstTallasActual.filter((s) => s !== talla)
-      : [...lstTallasActual, talla];
-
+  function handleClickTalla(talla: string) {
+    const lstTallasAux = lstTallas.includes(talla)
+      ? lstTallas.filter((s) => s !== talla)
+      : [...lstTallas, talla];
     searchParams.set("pagina", "1");
-    searchParams.set("lstTallas", lstTallasActualAux.join(","));
+    searchParams.set("lstTallas", lstTallasAux.join(","));
     setSearchParams(searchParams);
-  };
+  }
 
-  function handlePriceChange(precio: string) {
+  function handlePrecioChange(precio: string) {
     searchParams.set("pagina", "1");
     searchParams.set("precio", precio);
     setSearchParams(searchParams);
@@ -47,12 +46,10 @@ export function FiltroSidebar() {
           {GrupoTallas.map((talla) => (
             <Button
               key={talla.id}
-              variant={
-                lstTallasActual.includes(talla.id) ? "default" : "outline"
-              }
+              variant={lstTallas.includes(talla.id) ? "default" : "outline"}
               size="sm"
               className="h-8"
-              onClick={() => handleClickTallas(talla.id)}
+              onClick={() => handleClickTalla(talla.id)}
             >
               {talla.label}
             </Button>
@@ -66,8 +63,8 @@ export function FiltroSidebar() {
       <div className="space-y-4">
         <h4 className="font-medium">Precio</h4>
         <RadioGroup
-          value={precioActual}
-          onValueChange={handlePriceChange}
+          value={precio}
+          onValueChange={handlePrecioChange}
           className="space-y-3"
         >
           <div className="flex items-center space-x-2">
