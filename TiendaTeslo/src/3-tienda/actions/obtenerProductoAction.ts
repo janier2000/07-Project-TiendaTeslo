@@ -15,7 +15,6 @@ export async function obtenerProductoAction(
   options: Options,
 ): Promise<ProductsResponse> {
   const { limit, offset, gender, sizes, minPrice, maxPrice, query } = options;
-
   const { data } = await tesloApi.get<ProductsResponse>("/products", {
     params: {
       limit,

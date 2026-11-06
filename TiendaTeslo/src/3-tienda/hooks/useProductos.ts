@@ -4,56 +4,61 @@ import { useParams, useSearchParams } from "react-router";
 import { obtenerProductoAction } from "../actions/obtenerProductoAction";
 
 export function useProductos() {
-  const { gender } = useParams();
+  const { genero } = useParams();
   const [searchParams] = useSearchParams();
-  const query = searchParams.get("query") || undefined;
-  const limit = searchParams.get("limit") || 9;
-  const page = searchParams.get("page") || 1;
-  const sizes = searchParams.get("sizes") || undefined;
-  const offset = (Number(page) - 1) * Number(limit);
-  const price = searchParams.get("price") || "any";
-  let minPrice = undefined;
-  let maxPrice = undefined;
+  const consulta = searchParams.get("consulta") || undefined;
+  const limite = searchParams.get("limite") || 6;
+  const pagina = searchParams.get("pagina") || 1;
+  const lstTallas = searchParams.get("lstTallas") || undefined;
+  const precio = searchParams.get("precio") || "cualquier";
+  const compensar = (Number(pagina) - 1) * Number(limite);
+  let minPrecio = undefined;
+  let maxPrecio = undefined;
 
-  switch (price) {
-    case "any":
+  switch (precio) {
+    case "cualquier":
       //
       break;
     case "0-50":
-      minPrice = 0;
-      maxPrice = 50;
+      minPrecio = 0;
+      maxPrecio = 50;
       break;
-
     case "50-100":
-      minPrice = 50;
-      maxPrice = 100;
+      minPrecio = 50;
+      maxPrecio = 100;
       break;
-
     case "100-200":
-      minPrice = 100;
-      maxPrice = 200;
+      minPrecio = 100;
+      maxPrecio = 200;
       break;
-
     case "200+":
-      minPrice = 200;
-      maxPrice = undefined;
+      minPrecio = 200;
+      maxPrecio = undefined;
       break;
   }
 
   return useQuery({
     queryKey: [
       "products",
-      { offset, limit, gender, sizes, minPrice, maxPrice, query },
+      {
+        offset: compensar,
+        limit: limite,
+        gender: genero,
+        sizes: lstTallas,
+        minPrice: minPrecio,
+        maxPrice: maxPrecio,
+        query: consulta,
+      },
     ],
     queryFn: () =>
       obtenerProductoAction({
-        limit: isNaN(+limit) ? 9 : limit,
-        offset: isNaN(offset) ? 0 : offset,
-        gender,
-        sizes,
-        minPrice,
-        maxPrice,
-        query,
+        limit: isNaN(+limite) ? 9 : limite,
+        offset: isNaN(compensar) ? 0 : compensar,
+        gender: genero,
+        sizes: lstTallas,
+        minPrice: minPrecio,
+        maxPrice: maxPrecio,
+        query: consulta,
       }),
     staleTime: 1000 * 60 * 5,
   });
