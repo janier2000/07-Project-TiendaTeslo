@@ -15,6 +15,17 @@ export function useProductos() {
   let minPrecio = undefined;
   let maxPrecio = undefined;
 
+  const genderAux =
+    genero === "hombre"
+      ? "men"
+      : genero === "mujer"
+        ? "women"
+        : genero === "nino"
+          ? "kid"
+          : undefined;
+
+  console.log({ genero });
+
   switch (precio) {
     case "cualquier":
       //
@@ -43,7 +54,7 @@ export function useProductos() {
       {
         offset: compensar,
         limit: limite,
-        gender: genero,
+        gender: genderAux,
         sizes: lstTallas,
         minPrice: minPrecio,
         maxPrice: maxPrecio,
@@ -54,7 +65,7 @@ export function useProductos() {
       obtenerProductoAction({
         limit: isNaN(+limite) ? 9 : limite,
         offset: isNaN(compensar) ? 0 : compensar,
-        gender: genero,
+        gender: genderAux,
         sizes: lstTallas,
         minPrice: minPrecio,
         maxPrice: maxPrecio,
