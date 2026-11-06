@@ -100,7 +100,6 @@ export function ProductosGrid({ LstProductos }: Props) {
                 {LstProductos.map((producto) => (
                   <ProductoCard
                     key={producto.id}
-                    id={producto.id}
                     name={producto.title}
                     price={producto.price}
                     image={producto.images[0]}
