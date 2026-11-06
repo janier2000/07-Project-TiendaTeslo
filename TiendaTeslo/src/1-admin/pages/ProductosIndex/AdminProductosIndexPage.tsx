@@ -1,4 +1,4 @@
-import { AdminTitulo } from "@/admin/components/AdminTitulo";
+import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { Link } from "react-router";

@@ -1,6 +1,6 @@
 // https://github.com/Klerith/bolt-product-editor
 
-import { AdminTitulo } from "@/admin/components/AdminTitulo";
+import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import { useParams } from "react-router";
 
 import { useState } from "react";
