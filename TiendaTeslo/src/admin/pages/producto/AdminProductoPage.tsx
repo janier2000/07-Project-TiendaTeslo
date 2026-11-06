@@ -24,9 +24,9 @@ interface Product {
 export const AdminProductoPage = () => {
   const { id } = useParams();
 
-  const productTitle = id === "new" ? "Nuevo producto" : "Editar producto";
-  const productSubtitle =
-    id === "new"
+  const titulo = id === "nuevo" ? "Nuevo producto" : "Editar producto";
+  const subtitulo =
+    id === "nuevo"
       ? "Aquí puedes crear un nuevo producto."
       : "Aquí puedes editar el producto.";
 
@@ -52,13 +52,13 @@ export const AdminProductoPage = () => {
   const [newTag, setNewTag] = useState("");
   const [dragActive, setDragActive] = useState(false);
 
-  const availableSizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+  const tallasDisponible = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 
-  const handleInputChange = (field: keyof Product, value: string | number) => {
+  function handleInputChange(field: keyof Product, value: string | number) {
     setProduct((prev) => ({ ...prev, [field]: value }));
-  };
+  }
 
-  const addTag = () => {
+  function handleAgregarTag() {
     if (newTag.trim() && !product.tags.includes(newTag.trim())) {
       setProduct((prev) => ({
         ...prev,
@@ -66,32 +66,32 @@ export const AdminProductoPage = () => {
       }));
       setNewTag("");
     }
-  };
+  }
 
-  const removeTag = (tagToRemove: string) => {
+  function handleEliminarTag(tagToRemove: string) {
     setProduct((prev) => ({
       ...prev,
       tags: prev.tags.filter((tag) => tag !== tagToRemove),
     }));
-  };
+  }
 
-  const addSize = (size: string) => {
+  function handleClickAgregarTalla(size: string) {
     if (!product.sizes.includes(size)) {
       setProduct((prev) => ({
         ...prev,
         sizes: [...prev.sizes, size],
       }));
     }
-  };
+  }
 
-  const removeSize = (sizeToRemove: string) => {
+  function handleClickEliminarTalla(sizeToRemove: string) {
     setProduct((prev) => ({
       ...prev,
       sizes: prev.sizes.filter((size) => size !== sizeToRemove),
     }));
-  };
+  }
 
-  const handleDrag = (e: React.DragEvent) => {
+  function handleArrastrar(e: React.DragEvent) {
     e.preventDefault();
     e.stopPropagation();
     if (e.type === "dragenter" || e.type === "dragover") {
@@ -99,25 +99,25 @@ export const AdminProductoPage = () => {
     } else if (e.type === "dragleave") {
       setDragActive(false);
     }
-  };
+  }
 
-  const handleDrop = (e: React.DragEvent) => {
+  function handleSoltar(e: React.DragEvent) {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    const files = e.dataTransfer.files;
-    console.log(files);
-  };
+    const archivo = e.dataTransfer.files;
+    console.log(archivo);
+  }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    console.log(files);
-  };
+  function handleChangeArchivo(e: React.ChangeEvent<HTMLInputElement>) {
+    const archivo = e.target.files;
+    console.log(archivo);
+  }
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <AdminTitulo titulo={productTitle} subTitulo={productSubtitle} />
+        <AdminTitulo titulo={titulo} subTitulo={subtitulo} />
         <div className="flex justify-end mb-10 gap-4">
           <Button variant="outline">
             <Link to="/admin/producto" className="flex items-center gap-2">
@@ -252,7 +252,7 @@ export const AdminProductoPage = () => {
                     >
                       {size}
                       <button
-                        onClick={() => removeSize(size)}
+                        onClick={() => handleClickEliminarTalla(size)}
                         className="ml-2 text-blue-600 hover:text-blue-800 transition-colors duration-200"
                       >
                         <X className="h-3 w-3" />
@@ -265,18 +265,18 @@ export const AdminProductoPage = () => {
                   <span className="text-sm text-slate-600 mr-2">
                     Añadir tallas:
                   </span>
-                  {availableSizes.map((size) => (
+                  {tallasDisponible.map((talla) => (
                     <button
-                      key={size}
-                      onClick={() => addSize(size)}
-                      disabled={product.sizes.includes(size)}
+                      key={talla}
+                      onClick={() => handleClickAgregarTalla(talla)}
+                      disabled={product.sizes.includes(talla)}
                       className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
-                        product.sizes.includes(size)
+                        product.sizes.includes(talla)
                           ? "bg-slate-100 text-slate-400 cursor-not-allowed"
                           : "bg-slate-200 text-slate-700 hover:bg-slate-300 cursor-pointer"
                       }`}
                     >
-                      {size}
+                      {talla}
                     </button>
                   ))}
                 </div>
@@ -299,7 +299,7 @@ export const AdminProductoPage = () => {
                       <Tag className="h-3 w-3 mr-1" />
                       {tag}
                       <button
-                        onClick={() => removeTag(tag)}
+                        onClick={() => handleEliminarTag(tag)}
                         className="ml-2 text-green-600 hover:text-green-800 transition-colors duration-200"
                       >
                         <X className="h-3 w-3" />
@@ -313,11 +313,14 @@ export const AdminProductoPage = () => {
                     type="text"
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && addTag()}
+                    onKeyDown={(e) => e.key === "Enter" && handleAgregarTag()}
                     placeholder="Añadir nueva etiqueta..."
                     className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   />
-                  <Button onClick={addTag} className="px-4 py-2rounded-lg ">
+                  <Button
+                    onClick={handleAgregarTag}
+                    className="px-4 py-2rounded-lg "
+                  >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
@@ -340,17 +343,17 @@ export const AdminProductoPage = () => {
                     ? "border-blue-400 bg-blue-50"
                     : "border-slate-300 hover:border-slate-400"
                 }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
+                onDragEnter={handleArrastrar}
+                onDragLeave={handleArrastrar}
+                onDragOver={handleArrastrar}
+                onDrop={handleSoltar}
               >
                 <input
                   type="file"
                   multiple
                   accept="image/*"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  onChange={handleFileChange}
+                  onChange={handleChangeArchivo}
                 />
                 <div className="space-y-4">
                   <Upload className="mx-auto h-12 w-12 text-slate-400" />

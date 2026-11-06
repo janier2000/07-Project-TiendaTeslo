@@ -22,7 +22,7 @@ export function AdminProductosIndexPage() {
         />
 
         <div className="flex justify-end mb-10 gap-4">
-          <Link to="/admin/producto/new">
+          <Link to="/admin/producto/nuevo">
             <Button>
               <PlusIcon />
               Nuevo producto

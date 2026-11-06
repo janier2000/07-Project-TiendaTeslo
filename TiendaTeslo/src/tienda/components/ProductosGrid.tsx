@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/mocks/productosMock";
-import { ChevronLeft, ChevronRight, Filter, Grid, List } from "lucide-react";
+// import type { Product } from "@/mocks/productosMock";
+import { Filter, Grid, List } from "lucide-react";
 import { ProductoCard } from "./ProductoCard";
 import { FiltroSidebar } from "./FiltroSidebar";
 import { useSearchParams } from "react-router";
 import { useState } from "react";
+import type { Product } from "@/interfaces/productoInterface";
 
 interface Props {
   LstProductos: Product[];
@@ -96,14 +97,15 @@ export function ProductosGrid({ LstProductos }: Props) {
                     : "space-y-4"
                 }
               >
-                {LstProductos.map((product) => (
+                {LstProductos.map((producto) => (
                   <ProductoCard
-                    key={product.id}
-                    id={product.id}
-                    name={product.name}
-                    price={product.price}
-                    image={product.image}
-                    category={product.category}
+                    key={producto.id}
+                    id={producto.id}
+                    name={producto.title}
+                    price={producto.price}
+                    image={producto.images[0]}
+                    category={producto.gender}
+                    sizes={producto.sizes}
                   />
                 ))}
               </div>
