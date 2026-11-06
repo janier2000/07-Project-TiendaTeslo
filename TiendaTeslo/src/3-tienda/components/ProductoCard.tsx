@@ -17,6 +17,14 @@ export function ProductoCard({
   category,
   sizes,
 }: ProductoCardProps) {
+  const categoriaLabel =
+    category === "kid"
+      ? "niños"
+      : category === "men"
+        ? "hombres"
+        : category === "women"
+          ? "mujeres"
+          : category;
   return (
     <Card className="group border-0 shadow-none product-card-hover cursor-pointer">
       <CardContent className="p-0">
@@ -33,7 +41,7 @@ export function ProductoCard({
           <div className="space-y-1">
             <h3 className="font-medium text-sm tracking-tight">{name}</h3>
             <p className="text-xs text-muted-foreground uppercase">
-              {category} - <span>{sizes}</span>
+              {categoriaLabel} - <span>{sizes.join(", ")}</span>
             </p>
           </div>
 
