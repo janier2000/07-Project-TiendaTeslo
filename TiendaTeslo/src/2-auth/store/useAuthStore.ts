@@ -10,10 +10,8 @@ type StateAuth = {
   usuario: User | null;
   token: string | null;
   estadosAut: LstEstados;
-
   //captadores
   esAdministradorStore: () => boolean;
-
   //Acciones
   accesoStore: (correo: string, contraseña: string) => Promise<boolean>;
   cerrarSesionStore: () => void;
