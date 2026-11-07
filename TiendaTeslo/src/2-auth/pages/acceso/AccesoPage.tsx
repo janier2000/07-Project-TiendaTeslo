@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router";
 import { useState, type FormEvent } from "react";
-import { AccesoAction } from "@/2-auth/actions/AccesoAction";
 import { toast } from "sonner";
+import { useAuthStore } from "@/2-auth/store/useAuthStore";
 
 export function AccesoPage() {
   const navigate = useNavigate();
   const [iniciadoCorrecto, setIniciadoCorrecto] = useState(true);
-  // const { login } = useAuthStore();
+  const { accesoStore } = useAuthStore();
 
   async function handleOnSubmitAcceso(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); //previene la propagación del formulario por defecto
@@ -20,17 +20,14 @@ export function AccesoPage() {
     const DatosFormulario = new FormData(event.target as HTMLFormElement);
     const correo = DatosFormulario.get("correo") as string;
     const contraseña = DatosFormulario.get("contraseña") as string;
-
-    try {
-      debugger;
-      const data = await AccesoAction(correo, contraseña);
-      localStorage.setItem("token-Teslo", data.token);
-      navigate("/");
-    } catch (error) {
-      localStorage.removeItem("token-Teslo");
+    debugger;
+    const esValido = await accesoStore(correo, contraseña);
+    if (!esValido) {
       toast.error("Error al iniciar sesión correo o contraseña incorrectos");
+      setIniciadoCorrecto(false);
+      return;
     }
-    setIniciadoCorrecto(false);
+    navigate("/");
   }
 
   return (
@@ -77,7 +74,7 @@ export function AccesoPage() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={!iniciadoCorrecto}
+                disabled={iniciadoCorrecto}
               >
                 Ingresar
               </Button>

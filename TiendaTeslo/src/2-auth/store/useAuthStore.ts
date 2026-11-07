@@ -5,44 +5,41 @@ import { chequearAction } from "../actions/chequearAction";
 
 type LstEstados = "autenticado" | "no-autenticado" | "checkiado";
 
-type Estado = {
-  // propiedades
+type StateAuth = {
+  //propiedades
   user: User | null;
   token: string | null;
   estadosAut: LstEstados;
 
-  // Getters
-  isAdmin: () => boolean;
+  //captadores
+  esAdministradorStore: () => boolean;
 
-  // Actions
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
-  checkAuthStatus: () => Promise<boolean>;
+  //Acciones
+  accesoStore: (correo: string, contraseña: string) => Promise<boolean>;
+  cerrarSesionStore: () => void;
+  chequearEstadoStore: () => Promise<boolean>;
 };
 
-export const useAuthStore = create<Estado>()((set, get) => ({
+export const useAuthStore = create<StateAuth>()((set, get) => ({
   // Implementación del Store
   user: null,
   token: null,
   estadosAut: "checkiado",
 
-  // Getters
-  isAdmin: function () {
+  // captadores
+  esAdministradorStore: function () {
     const roles = get().user?.roles || [];
     return roles.includes("admin");
     // return !!get().user?.roles.includes('admin')
   },
 
   // Actions
-  login: async function (correo: string, contraseña: string) {
+  accesoStore: async function (correo: string, contraseña: string) {
     console.log({ correo, contraseña });
-
     try {
       const data = await AccesoAction(correo, contraseña);
       localStorage.setItem("token-Teslo", data.token);
-
       set({ user: data.user, token: data.token, estadosAut: "autenticado" });
-
       return true;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -52,12 +49,12 @@ export const useAuthStore = create<Estado>()((set, get) => ({
     }
   },
 
-  logout: () => {
+  cerrarSesionStore: function () {
     localStorage.removeItem("token-Teslo");
     set({ user: null, token: null, estadosAut: "no-autenticado" });
   },
 
-  checkAuthStatus: async () => {
+  chequearEstadoStore: async function () {
     try {
       const { user, token } = await chequearAction();
       set({
@@ -73,7 +70,6 @@ export const useAuthStore = create<Estado>()((set, get) => ({
         token: undefined,
         estadosAut: "no-autenticado",
       });
-
       return false;
     }
   },
