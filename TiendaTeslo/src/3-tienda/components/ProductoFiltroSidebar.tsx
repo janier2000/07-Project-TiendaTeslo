@@ -4,7 +4,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useSearchParams } from "react-router";
 
-export function FiltroSidebar() {
+export function ProductoFiltroSidebar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const lstTallas = searchParams.get("lstTallas")?.split(",") || []; // xs,l,xl
   const precio = searchParams.get("precio") || "cualquier";

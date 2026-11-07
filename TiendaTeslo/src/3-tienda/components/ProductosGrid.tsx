@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 // import type { Product } from "@/mocks/productosMock";
 import { Filter, Grid, List } from "lucide-react";
 import { ProductoCard } from "./ProductoCard";
-import { FiltroSidebar } from "./FiltroSidebar";
+import { ProductoFiltroSidebar } from "./ProductoFiltroSidebar";
 import { useSearchParams } from "react-router";
 import { useState } from "react";
 import type { Product } from "@/interfaces/productoInterface";
@@ -68,7 +68,7 @@ export function ProductosGrid({ LstProductos }: Props) {
           <div className="flex gap-8">
             {/* Filters Sidebar - Desktop */}
             <div className="hidden lg:block">
-              <FiltroSidebar />
+              <ProductoFiltroSidebar />
             </div>
 
             {/* Mobile Filters */}
@@ -84,7 +84,7 @@ export function ProductosGrid({ LstProductos }: Props) {
                     Cerrar
                   </Button>
                 </div>
-                <FiltroSidebar />
+                <ProductoFiltroSidebar />
               </div>
             )}
 
