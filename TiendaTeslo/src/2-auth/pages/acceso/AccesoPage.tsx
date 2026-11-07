@@ -3,14 +3,41 @@ import { Logo } from "@/components/Logo";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useState, type FormEvent } from "react";
+import { AccesoAction } from "@/2-auth/actions/AccesoAction";
+import { toast } from "sonner";
 
 export function AccesoPage() {
+  const navigate = useNavigate();
+  const [iniciadoCorrecto, setIniciadoCorrecto] = useState(true);
+  // const { login } = useAuthStore();
+
+  async function handleOnSubmitAcceso(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); //previene la propagación del formulario por defecto
+
+    setIniciadoCorrecto(true);
+    const DatosFormulario = new FormData(event.target as HTMLFormElement);
+    const correo = DatosFormulario.get("correo") as string;
+    const contrasena = DatosFormulario.get("password") as string;
+
+    try {
+      debugger;
+      const data = await AccesoAction(correo, contrasena);
+      localStorage.setItem("token-Teslo", data.token);
+      navigate("/");
+    } catch (error) {
+      localStorage.removeItem("token-Teslo");
+      toast.error("Error al iniciar sesión correo o contraseña incorrectos");
+    }
+    setIniciadoCorrecto(false);
+  }
+
   return (
     <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0  ">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={handleOnSubmitAcceso}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <Logo />
@@ -20,10 +47,11 @@ export function AccesoPage() {
                 </p>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Correo</Label>
+                <Label htmlFor="correo">Correo</Label>
                 <Input
-                  id="email"
+                  id="correo"
                   type="email"
+                  name="correo"
                   placeholder="mail@google.com"
                   required
                 />
@@ -41,11 +69,16 @@ export function AccesoPage() {
                 <Input
                   id="password"
                   type="password"
+                  name="password"
                   required
                   placeholder="Contraseña"
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={!iniciadoCorrecto}
+              >
                 Ingresar
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

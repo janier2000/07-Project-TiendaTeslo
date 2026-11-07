@@ -1,7 +1,7 @@
 import { tesloApi } from "@/api/tesloApi";
 import type { AuthResponse } from "../interfaces/authResponse";
 
-export async function loginAction(
+export async function AccesoAction(
   email: string,
   password: string,
 ): Promise<AuthResponse> {

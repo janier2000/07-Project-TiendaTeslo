@@ -12,8 +12,14 @@ usuario
     "email":"test2@google.com",
     "password":"Abc123"
 }
+------
+pasa sacar el jason
+paste json as code
+https://app.quicktype.io/
+https://marketplace.visualstudio.com/items?itemName=quicktype.quicktype
 
 
+/////////////////////////////////////
 -----------------------------
 paso para isntalar
 
@@ -36,7 +42,6 @@ npm i @tanstack/react-query axios
 npm i @tanstack/react-query devtools
 
 -------
-pasa sacar el jason
-paste json as code
-https://app.quicktype.io/
-https://marketplace.visualstudio.com/items?itemName=quicktype.quicktype
+npm i sonner
+
+
