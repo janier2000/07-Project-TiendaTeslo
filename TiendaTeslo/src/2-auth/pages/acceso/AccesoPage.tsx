@@ -19,11 +19,11 @@ export function AccesoPage() {
     setIniciadoCorrecto(true);
     const DatosFormulario = new FormData(event.target as HTMLFormElement);
     const correo = DatosFormulario.get("correo") as string;
-    const contrasena = DatosFormulario.get("password") as string;
+    const contraseña = DatosFormulario.get("contraseña") as string;
 
     try {
       debugger;
-      const data = await AccesoAction(correo, contrasena);
+      const data = await AccesoAction(correo, contraseña);
       localStorage.setItem("token-Teslo", data.token);
       navigate("/");
     } catch (error) {
@@ -58,7 +58,7 @@ export function AccesoPage() {
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Contraseña</Label>
+                  <Label htmlFor="contraseña">Contraseña</Label>
                   <a
                     href="#"
                     className="ml-auto text-sm underline-offset-2 hover:underline"
@@ -67,9 +67,9 @@ export function AccesoPage() {
                   </a>
                 </div>
                 <Input
-                  id="password"
+                  id="contraseña"
                   type="password"
-                  name="password"
+                  name="contraseña"
                   required
                   placeholder="Contraseña"
                 />

@@ -1,12 +1,15 @@
+import type { User } from "@/interfaces/userInterface";
 import { create } from "zustand";
+import { AccesoAction } from "../actions/AccesoAction";
+import { chequearAction } from "../actions/chequearAction";
 
-type AuthStatus = "authenticated" | "not-authenticated" | "checking";
+type LstEstados = "autenticado" | "no-autenticado" | "checkiado";
 
-type AuthState = {
-  // Properties
+type Estado = {
+  // propiedades
   user: User | null;
   token: string | null;
-  authStatus: AuthStatus;
+  estadosAut: LstEstados;
 
   // Getters
   isAdmin: () => boolean;
@@ -17,50 +20,50 @@ type AuthState = {
   checkAuthStatus: () => Promise<boolean>;
 };
 
-export const useAuthStore = create<AuthState>()((set, get) => ({
+export const useAuthStore = create<Estado>()((set, get) => ({
   // Implementación del Store
   user: null,
   token: null,
-  authStatus: "checking",
+  estadosAut: "checkiado",
 
   // Getters
-  isAdmin: () => {
+  isAdmin: function () {
     const roles = get().user?.roles || [];
     return roles.includes("admin");
     // return !!get().user?.roles.includes('admin')
   },
 
   // Actions
-  login: async (email: string, password: string) => {
-    console.log({ email, password });
+  login: async function (correo: string, contraseña: string) {
+    console.log({ correo, contraseña });
 
     try {
-      const data = await loginAction(email, password);
-      localStorage.setItem("token", data.token);
+      const data = await AccesoAction(correo, contraseña);
+      localStorage.setItem("token-Teslo", data.token);
 
-      set({ user: data.user, token: data.token, authStatus: "authenticated" });
+      set({ user: data.user, token: data.token, estadosAut: "autenticado" });
 
       return true;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      localStorage.removeItem("token");
-      set({ user: null, token: null, authStatus: "not-authenticated" });
+      localStorage.removeItem("token-Teslo");
+      set({ user: null, token: null, estadosAut: "no-autenticado" });
       return false;
     }
   },
 
   logout: () => {
-    localStorage.removeItem("token");
-    set({ user: null, token: null, authStatus: "not-authenticated" });
+    localStorage.removeItem("token-Teslo");
+    set({ user: null, token: null, estadosAut: "no-autenticado" });
   },
 
   checkAuthStatus: async () => {
     try {
-      const { user, token } = await checkAuthAction();
+      const { user, token } = await chequearAction();
       set({
         user: user,
         token: token,
-        authStatus: "authenticated",
+        estadosAut: "autenticado",
       });
       return true;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -68,7 +71,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       set({
         user: undefined,
         token: undefined,
-        authStatus: "not-authenticated",
+        estadosAut: "no-autenticado",
       });
 
       return false;
