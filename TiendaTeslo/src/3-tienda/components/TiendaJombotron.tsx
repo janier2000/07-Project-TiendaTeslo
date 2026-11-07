@@ -3,7 +3,7 @@ interface Props {
   subTitulo?: string;
 }
 
-export function Jombotron({ titulo, subTitulo }: Props) {
+export function TiendaJombotron({ titulo, subTitulo }: Props) {
   const defaultSubTitulo =
     "Ropa minimalista y elegante inspirada en el diseño futurista de Tesla. " +
     "Calidad premium para un estilo atemporal.";

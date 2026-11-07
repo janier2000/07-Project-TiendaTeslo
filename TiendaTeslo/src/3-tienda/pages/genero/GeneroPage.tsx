@@ -1,5 +1,5 @@
 import { Paginacion } from "@/components/Paginacion";
-import { Jombotron } from "@/3-tienda/components/Jombotron";
+import { TiendaJombotron } from "@/3-tienda/components/TiendaJombotron";
 import { ProductosGrid } from "@/3-tienda/components/ProductosGrid";
 // import { products } from "@/mocks/productosMock";
 import { useParams } from "react-router";
@@ -13,7 +13,9 @@ export function GeneroPage() {
     genero === "hombre" ? "hombres" : genero === "mujer" ? "mujeres" : "niños";
   return (
     <>
-      <Jombotron titulo={`Productos para ${generoLabel}`}></Jombotron>
+      <TiendaJombotron
+        titulo={`Productos para ${generoLabel}`}
+      ></TiendaJombotron>
       <ProductosGrid LstProductos={data?.products || []}></ProductosGrid>
       <Paginacion totalPaginas={data?.pages || 1}></Paginacion>
     </>

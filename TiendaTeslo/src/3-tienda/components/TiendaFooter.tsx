@@ -1,6 +1,6 @@
 import { Logo } from "@/components/Logo";
 
-export function Footer() {
+export function TiendaFooter() {
   return (
     <div>
       <footer className="border-t py-12 px-4 lg:px-8 mt-16">

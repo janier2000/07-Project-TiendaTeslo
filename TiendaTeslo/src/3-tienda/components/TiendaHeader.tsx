@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
 import { cn } from "@/lib/utils";
 
-export function Header() {
+export function TiendaHeader() {
   // const [cantidadEnElCarrito] = useState(40);
   const [searchParams, setSearchParams] = useSearchParams();
   const consultaParametro = searchParams.get("consulta") || "";
