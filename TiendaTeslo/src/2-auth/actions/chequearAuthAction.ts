@@ -1,7 +1,7 @@
 import { tesloApi } from "@/api/tesloApi";
 import type { AuthResponse } from "../interfaces/authResponse";
 
-export async function chequearAction(): Promise<AuthResponse> {
+export async function chequearAuthAction(): Promise<AuthResponse> {
   const token = localStorage.getItem("token-Teslo");
   if (!token) {
     throw new Error("Token no encontrado");

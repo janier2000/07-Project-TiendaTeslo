@@ -1,7 +1,7 @@
 import type { User } from "@/interfaces/userInterface";
 import { create } from "zustand";
 import { AccesoAction } from "../actions/AccesoAction";
-import { chequearAction } from "../actions/chequearAction";
+import { chequearAuthAction } from "../actions/chequearAuthAction";
 
 type LstEstados = "autenticado" | "no-autenticado" | "checkiado";
 
@@ -54,7 +54,7 @@ export const useAuthStore = create<StateAuth>()((set, get) => ({
 
   chequearEstadoStore: async function () {
     try {
-      const { user, token } = await chequearAction();
+      const { user, token } = await chequearAuthAction();
       set({
         usuario: user,
         token: token,
