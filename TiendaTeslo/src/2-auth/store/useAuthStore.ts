@@ -11,7 +11,7 @@ type StateAuth = {
   token: string | null;
   estadosAut: LstEstados;
   //captadores
-  esAdministradorStore: () => boolean;
+  esAdminStore: () => boolean;
   //Acciones
   accesoStore: (correo: string, contraseña: string) => Promise<boolean>;
   cerrarSesionStore: () => void;
@@ -25,7 +25,7 @@ export const useAuthStore = create<StateAuth>()((set, get) => ({
   estadosAut: "checkiado",
 
   // captadores
-  esAdministradorStore: function () {
+  esAdminStore: function () {
     const roles = get().usuario?.roles || [];
     return roles.includes("admin");
     // return !!get().user?.roles.includes('admin')

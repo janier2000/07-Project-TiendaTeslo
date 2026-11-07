@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router";
+import { useAuthStore } from "@/2-auth/store/useAuthStore";
 import {
   Home,
   Users,
@@ -35,6 +36,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
     { icon: HelpCircle, label: "Ayuda" },
   ];
   const { pathname: nombreRuta } = useLocation();
+  const { usuario } = useAuthStore();
 
   function esRutaActiva(to: string) {
     // TODO: ajustarlo cuando estemos en la pantalla de producto
@@ -86,23 +88,25 @@ export const AdminSidebar: React.FC<SidebarProps> = ({
           })}
         </ul>
       </nav>
-
-      {/* User Profile */}
-      {/* {!isCollapsed && (
+      {/* Perfil de usuario */}
+      {!isCollapsed && (
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-              JD
+              {usuario?.fullName
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">
-                John Doe
+                {usuario?.fullName}
               </p>
-              <p className="text-xs text-gray-500 truncate">john@company.com</p>
+              <p className="text-xs text-gray-500 truncate">{usuario?.email}</p>
             </div>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
