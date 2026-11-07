@@ -20,7 +20,7 @@ export function AccesoPage() {
     const DatosFormulario = new FormData(event.target as HTMLFormElement);
     const correo = DatosFormulario.get("correo") as string;
     const contraseña = DatosFormulario.get("contraseña") as string;
-    debugger;
+
     const esValido = await accesoStore(correo, contraseña);
     if (!esValido) {
       toast.error("Error al iniciar sesión correo o contraseña incorrectos");
@@ -74,7 +74,7 @@ export function AccesoPage() {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={iniciadoCorrecto}
+                // disabled={iniciadoCorrecto}
               >
                 Ingresar
               </Button>

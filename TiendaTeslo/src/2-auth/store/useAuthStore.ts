@@ -7,7 +7,7 @@ type LstEstados = "autenticado" | "no-autenticado" | "checkiado";
 
 type StateAuth = {
   //propiedades
-  user: User | null;
+  usuario: User | null;
   token: string | null;
   estadosAut: LstEstados;
 
@@ -22,13 +22,13 @@ type StateAuth = {
 
 export const useAuthStore = create<StateAuth>()((set, get) => ({
   // Implementación del Store
-  user: null,
+  usuario: null,
   token: null,
   estadosAut: "checkiado",
 
   // captadores
   esAdministradorStore: function () {
-    const roles = get().user?.roles || [];
+    const roles = get().usuario?.roles || [];
     return roles.includes("admin");
     // return !!get().user?.roles.includes('admin')
   },
@@ -39,26 +39,26 @@ export const useAuthStore = create<StateAuth>()((set, get) => ({
     try {
       const data = await AccesoAction(correo, contraseña);
       localStorage.setItem("token-Teslo", data.token);
-      set({ user: data.user, token: data.token, estadosAut: "autenticado" });
+      set({ usuario: data.user, token: data.token, estadosAut: "autenticado" });
       return true;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       localStorage.removeItem("token-Teslo");
-      set({ user: null, token: null, estadosAut: "no-autenticado" });
+      set({ usuario: null, token: null, estadosAut: "no-autenticado" });
       return false;
     }
   },
 
   cerrarSesionStore: function () {
     localStorage.removeItem("token-Teslo");
-    set({ user: null, token: null, estadosAut: "no-autenticado" });
+    set({ usuario: null, token: null, estadosAut: "no-autenticado" });
   },
 
   chequearEstadoStore: async function () {
     try {
       const { user, token } = await chequearAction();
       set({
-        user: user,
+        usuario: user,
         token: token,
         estadosAut: "autenticado",
       });
@@ -66,7 +66,7 @@ export const useAuthStore = create<StateAuth>()((set, get) => ({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       set({
-        user: undefined,
+        usuario: undefined,
         token: undefined,
         estadosAut: "no-autenticado",
       });
