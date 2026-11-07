@@ -16,7 +16,7 @@ const queryClient = new QueryClient();
 const VerificarAuthProveedora = ({ children }: PropsWithChildren) => {
   const { chequearEstadoStore } = useAuthStore();
 
-  const { isLoading, data } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["auth"],
     queryFn: chequearEstadoStore,
     retry: false,
@@ -24,8 +24,8 @@ const VerificarAuthProveedora = ({ children }: PropsWithChildren) => {
     refetchOnWindowFocus: true,
   });
 
-  console.log("está cargando:", isLoading);
-  console.log("data:", { data });
+  // console.log("está cargando:", isLoading);
+  // console.log("data:", { data });
 
   if (isLoading) {
     return <CargaPantallaCompleta />;
