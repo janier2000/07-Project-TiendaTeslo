@@ -1,11 +1,10 @@
 import { Paginacion } from "@/components/Paginacion";
-// import { products } from "@/mocks/productosMock";
-import { TiendaJombotron } from "@/3-tienda/components/TiendaJombotron";
+import { useLstProductos } from "@/3-tienda/hooks/useLstProductos";
 import { ProductosGrid } from "@/3-tienda/components/ProductosGrid";
-import { useProductos } from "@/3-tienda/hooks/useProductos";
+import { TiendaJombotron } from "@/3-tienda/components/TiendaJombotron";
 
 export function InicioPage() {
-  const { data } = useProductos();
+  const { data } = useLstProductos();
   return (
     <>
       <TiendaJombotron titulo="Bienvenido a nuestra tienda"></TiendaJombotron>

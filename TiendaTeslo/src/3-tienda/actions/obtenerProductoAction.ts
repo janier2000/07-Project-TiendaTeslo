@@ -11,7 +11,7 @@ interface Options {
   query?: string;
 }
 
-export async function obtenerProductoAction(
+export async function obtenerLstProductoAction(
   options: Options,
 ): Promise<ProductsResponse> {
   const { limit, offset, gender, sizes, minPrice, maxPrice, query } = options;

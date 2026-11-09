@@ -3,11 +3,11 @@ import { TiendaJombotron } from "@/3-tienda/components/TiendaJombotron";
 import { ProductosGrid } from "@/3-tienda/components/ProductosGrid";
 // import { products } from "@/mocks/productosMock";
 import { useParams } from "react-router";
-import { useProductos } from "@/3-tienda/hooks/useProductos";
+import { useLstProductos } from "@/3-tienda/hooks/useLstProductos";
 
 export function GeneroPage() {
   const { genero } = useParams();
-  const { data } = useProductos();
+  const { data } = useLstProductos();
 
   const generoLabel =
     genero === "hombre" ? "hombres" : genero === "mujer" ? "mujeres" : "niños";

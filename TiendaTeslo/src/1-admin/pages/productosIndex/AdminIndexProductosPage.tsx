@@ -11,13 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Cargando } from "@/components/Cargando";
 import { Paginacion } from "@/components/Paginacion";
-import { useProductos } from "@/3-tienda/hooks/useProductos";
+import { useLstProductos } from "@/3-tienda/hooks/useLstProductos";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import { formatoMoneda } from "@/lib/formatoMoneda";
 
 export function AdminIndexProductosPage() {
-  debugger;
-  const { data, isLoading } = useProductos();
+  const { data, isLoading } = useLstProductos();
   if (isLoading) {
     return <Cargando />;
   }

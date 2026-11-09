@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router";
-import { obtenerProductoAction } from "../actions/obtenerProductoAction";
+import { obtenerLstProductoAction } from "../actions/obtenerProductoAction";
 
-export function useProductos() {
+export function useLstProductos() {
   const { genero } = useParams();
   const [searchParams] = useSearchParams();
   const consulta = searchParams.get("consulta") || undefined;
@@ -61,7 +61,7 @@ export function useProductos() {
       },
     ],
     queryFn: () =>
-      obtenerProductoAction({
+      obtenerLstProductoAction({
         limit: isNaN(+limite) ? 9 : limite,
         offset: isNaN(compensar) ? 0 : compensar,
         gender: genderAux,
