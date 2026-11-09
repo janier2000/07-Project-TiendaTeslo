@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
+import { RutaNoAutenticado, RutaAdmin } from "../components/ProteccionRuta";
 import { TiendaLayout } from "../3-tienda/layouts/TiendaLayout";
 import { InicioPage } from "../3-tienda/pages/inicio/InicioPage";
 import { ProductoPage } from "../3-tienda/pages/producto/ProductoPage";
@@ -46,7 +47,11 @@ export const EnrutadorAPP = createBrowserRouter([
   // Rutas de autenticación
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <RutaNoAutenticado>
+        <AuthLayout />
+      </RutaNoAutenticado>
+    ),
     children: [
       {
         index: true,
@@ -65,7 +70,11 @@ export const EnrutadorAPP = createBrowserRouter([
   // Rutas de administrador
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <RutaAdmin>
+        <AdminLayout />
+      </RutaAdmin>
+    ),
     children: [
       {
         index: true,
