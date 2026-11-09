@@ -33,7 +33,7 @@ export const useAuthStore = create<StateAuth>()((set, get) => ({
 
   // Actions
   accesoStore: async function (correo: string, contraseña: string) {
-    console.log({ correo, contraseña });
+    //console.log({ correo, contraseña });
     try {
       const data = await AccesoAction(correo, contraseña);
       localStorage.setItem("token-Teslo", data.token);

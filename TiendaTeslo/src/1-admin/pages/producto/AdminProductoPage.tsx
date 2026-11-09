@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { X, Plus, Upload, Tag, SaveAll } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
+import { useProducto } from "@/1-admin/hooks/useProducto";
 interface Product {
   id: string;
   title: string;
@@ -18,6 +19,9 @@ interface Product {
 
 export const AdminProductoPage = () => {
   const { id } = useParams();
+
+  const { data: producto2, isLoading } = useProducto(id || "");
+  console.log(producto2, isLoading);
 
   const titulo = id === "nuevo" ? "Nuevo producto" : "Editar producto";
   const subtitulo =
@@ -101,12 +105,12 @@ export const AdminProductoPage = () => {
     e.stopPropagation();
     setDragActive(false);
     const archivo = e.dataTransfer.files;
-    console.log(archivo);
+    //console.log(archivo);
   }
 
   function handleChangeArchivo(e: React.ChangeEvent<HTMLInputElement>) {
     const archivo = e.target.files;
-    console.log(archivo);
+    //console.log(archivo);
   }
 
   return (

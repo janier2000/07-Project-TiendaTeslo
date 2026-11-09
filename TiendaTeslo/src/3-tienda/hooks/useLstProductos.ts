@@ -23,7 +23,7 @@ export function useLstProductos() {
           ? "kid"
           : undefined;
 
-  console.log({ genero });
+  //console.log({ genero });
 
   switch (precio) {
     case "cualquier":

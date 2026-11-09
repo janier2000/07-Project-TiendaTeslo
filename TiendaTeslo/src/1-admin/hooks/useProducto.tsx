@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { obtenerProductoXIdAccion } from "../actions/obtenerProductoXIdAccion";
+import { obtenerProductoAction } from "../actions/obtenerProductoAction";
 import { MantenimientoProductoAccion } from "../actions/MantenimientoProductoAccion";
 import type { Product } from "@/interfaces/productoInterface";
 
-export function useProductoAdmin(id: string) {
+export function useProducto(id: string) {
   const queryClient = useQueryClient();
 
   const query = useQuery({
     queryKey: ["product", { id }],
-    queryFn: () => obtenerProductoXIdAccion(id),
+    queryFn: () => obtenerProductoAction(id),
     retry: false,
     staleTime: 1000 * 60 * 5, // 5 minutos
     // enabled: !!id

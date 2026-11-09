@@ -1,7 +1,7 @@
 import { tesloApi } from "@/api/tesloApi";
 import type { Product } from "@/interfaces/productoInterface";
 
-export async function obtenerProductoXIdAccion(id: string): Promise<Product> {
+export async function obtenerProductoAction(id: string): Promise<Product> {
   if (!id) {
     throw new Error("Se requiere un ID.");
   }
