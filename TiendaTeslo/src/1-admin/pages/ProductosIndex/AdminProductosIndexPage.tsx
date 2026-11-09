@@ -1,7 +1,7 @@
-import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
 import { Link } from "react-router";
+import { PlusIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import {
   Table,
   TableHeader,
@@ -10,6 +10,7 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
+
 import { Paginacion } from "@/components/Paginacion";
 
 export function AdminProductosIndexPage() {

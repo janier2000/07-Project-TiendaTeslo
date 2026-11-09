@@ -1,13 +1,8 @@
-// https://github.com/Klerith/bolt-product-editor
-
-import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
-import { useParams } from "react-router";
-
 import { useState } from "react";
+import { Link, useParams } from "react-router";
 import { X, Plus, Upload, Tag, SaveAll } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
-
+import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 interface Product {
   id: string;
   title: string;
