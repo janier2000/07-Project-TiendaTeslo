@@ -26,6 +26,8 @@ export const useAuthStore = create<StateAuth>()((set, get) => ({
 
   // captadores
   esAdminStore: function () {
+    debugger;
+
     const roles = get().usuario?.roles || [];
     return roles.includes("admin");
     // return !!get().user?.roles.includes('admin')

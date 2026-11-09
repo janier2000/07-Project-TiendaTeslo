@@ -9,8 +9,9 @@ import { useAuthStore } from "@/2-auth/store/useAuthStore";
 
 export function TiendaHeader() {
   // const [cantidadEnElCarrito] = useState(40);
+  const { estadosAut, usuario, esAdminStore, cerrarSesionStore } =
+    useAuthStore();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { usuario, cerrarSesionStore } = useAuthStore();
   const consultaParametro = searchParams.get("consulta") || "";
   const inputRef = useRef<HTMLInputElement>(null);
   const { genero } = useParams();
@@ -95,10 +96,10 @@ export function TiendaHeader() {
               <Search className="h-5 w-5" />
             </Button>
 
-            {usuario ? (
+            {estadosAut == "autenticado" ? (
               <>
                 <span className="text-sm font-medium">
-                  Hola: {usuario.fullName}
+                  Hola: {usuario?.fullName}
                 </span>
                 <Button
                   variant="destructive"
@@ -117,11 +118,13 @@ export function TiendaHeader() {
               </Link>
             )}
 
-            <Link to="/admin">
-              <Button variant="destructive" size="sm" className="ml-2">
-                Administrador
-              </Button>
-            </Link>
+            {esAdminStore() && (
+              <Link to="/admin">
+                <Button variant="destructive" size="sm" className="ml-2">
+                  Administrador
+                </Button>
+              </Link>
+            )}
 
             {/* <Button variant="ghost" size="icon" className="relative">
               <ShoppingBag className="h-5 w-5" />
