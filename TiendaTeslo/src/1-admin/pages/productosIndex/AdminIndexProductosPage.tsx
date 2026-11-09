@@ -1,7 +1,5 @@
 import { Link } from "react-router";
 import { PlusIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import {
   Table,
   TableHeader,
@@ -10,10 +8,18 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-
+import { Button } from "@/components/ui/button";
+import { Cargando } from "@/components/Cargando";
 import { Paginacion } from "@/components/Paginacion";
+import { useProductos } from "@/3-tienda/hooks/useProductos";
+import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 
-export function AdminProductosIndexPage() {
+export function AdminIndexProductosPage() {
+  const { data, isLoading } = useProductos();
+  if (isLoading) {
+    return <Cargando />;
+  }
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -68,7 +74,7 @@ export function AdminProductosIndexPage() {
         </TableBody>
       </Table>
 
-      <Paginacion totalPaginas={10} />
+      <Paginacion totalPaginas={data?.pages || 0} />
     </>
   );
 }

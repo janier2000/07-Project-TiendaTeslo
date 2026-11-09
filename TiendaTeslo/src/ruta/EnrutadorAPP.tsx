@@ -8,7 +8,7 @@ import { GeneroPage } from "../3-tienda/pages/genero/GeneroPage";
 import { AccesoPage } from "../2-auth/pages/acceso/AccesoPage";
 import { RegistroPage } from "../2-auth/pages/registro/RegistroPage";
 import { DashboardPage } from "@/1-admin/pages/dashboard/DashboardPage";
-import { AdminProductosIndexPage } from "@/1-admin/pages/ProductosIndex/AdminProductosIndexPage";
+import { AdminIndexProductosPage } from "@/1-admin/pages/productosIndex/AdminIndexProductosPage";
 import { AdminProductoPage } from "@/1-admin/pages/producto/AdminProductoPage";
 
 const AuthLayout = lazy(() =>
@@ -82,7 +82,7 @@ export const EnrutadorAPP = createBrowserRouter([
       },
       {
         path: "producto",
-        element: <AdminProductosIndexPage />,
+        element: <AdminIndexProductosPage />,
       },
       {
         path: "producto/:id",

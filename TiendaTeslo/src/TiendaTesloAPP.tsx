@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { Toaster } from "sonner";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { CargaPantallaCompleta } from "./components/CargaPantallaCompleta";
+import { Cargando } from "./components/Cargando";
 import { useAuthStore } from "./2-auth/store/useAuthStore";
 
 const queryClient = new QueryClient();
@@ -28,7 +28,7 @@ const VerificarAuthProveedora = ({ children }: PropsWithChildren) => {
   // console.log("data:", { data });
 
   if (isLoading) {
-    return <CargaPantallaCompleta />;
+    return <Cargando />;
   }
   return children;
 };

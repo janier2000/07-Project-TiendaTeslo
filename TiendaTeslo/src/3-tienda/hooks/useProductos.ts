@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router";
-
 import { obtenerProductoAction } from "../actions/obtenerProductoAction";
 
 export function useProductos() {
