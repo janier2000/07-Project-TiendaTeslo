@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useParams, Navigate } from "react-router";
+import type { UseQueryResult } from "@tanstack/react-query";
 import { X, Plus, Upload, Tag, SaveAll } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import { useProducto } from "@/1-admin/hooks/useProducto";
+import { Cargando } from "@/components/Cargando";
 interface Product {
   id: string;
   title: string;
@@ -20,7 +22,7 @@ interface Product {
 export const AdminProductoPage = () => {
   const { id } = useParams();
 
-  const { data: producto2, isLoading } = useProducto(id || "");
+  const { data: producto2, isLoading, isError } = useProducto(id || "");
   console.log(producto2, isLoading);
 
   const titulo = id === "nuevo" ? "Nuevo producto" : "Editar producto";
@@ -52,6 +54,14 @@ export const AdminProductoPage = () => {
   const [dragActive, setDragActive] = useState(false);
 
   const tallasDisponible = ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+
+  if (isError) {
+    return <Navigate to="/admin/producto" />;
+  }
+
+  if (isLoading) {
+    return <Cargando></Cargando>;
+  }
 
   function handleInputChange(field: keyof Product, value: string | number) {
     setProduct((prev) => ({ ...prev, [field]: value }));
