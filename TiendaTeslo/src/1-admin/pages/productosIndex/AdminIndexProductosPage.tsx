@@ -13,7 +13,7 @@ import { Cargando } from "@/components/Cargando";
 import { Paginacion } from "@/components/Paginacion";
 import { useProductos } from "@/3-tienda/hooks/useProductos";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
-import { formatoMoneda } from "@/lib/FormatoMoneda";
+import { formatoMoneda } from "@/lib/formatoMoneda";
 
 export function AdminIndexProductosPage() {
   debugger;
