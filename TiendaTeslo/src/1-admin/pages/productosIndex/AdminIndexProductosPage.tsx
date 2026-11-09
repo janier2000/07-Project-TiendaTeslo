@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { PlusIcon } from "lucide-react";
+import { PencilIcon, PlusIcon } from "lucide-react";
 import {
   Table,
   TableHeader,
@@ -13,6 +13,7 @@ import { Cargando } from "@/components/Cargando";
 import { Paginacion } from "@/components/Paginacion";
 import { useProductos } from "@/3-tienda/hooks/useProductos";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
+import { formatoMoneda } from "@/lib/FormatoMoneda";
 
 export function AdminIndexProductosPage() {
   const { data, isLoading } = useProductos();
@@ -41,7 +42,6 @@ export function AdminIndexProductosPage() {
       <Table className="bg-white p-10 shadow-xs border border-gray-200 mb-10">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">ID</TableHead>
             <TableHead>Imagen</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead>Precio</TableHead>
@@ -52,25 +52,42 @@ export function AdminIndexProductosPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">1</TableCell>
-            <TableCell>
-              <img
-                src="https://placehold.co/250x250"
-                alt="Product"
-                className="w-20 h-20 object-cover rounded-md"
-              />
-            </TableCell>
-            <TableCell>Producto 1</TableCell>
-            <TableCell>$250.00</TableCell>
-            <TableCell>Categoría 1</TableCell>
-            <TableCell>100 stock</TableCell>
-            <TableCell>XS,S,L</TableCell>
-            <TableCell className="text-right">
-              {/* <Link to={`t-shirt-teslo`}>Editar</Link> */}
-              <Link to={`/admin/producto/t-shirt-teslo`}>Editar</Link>
-            </TableCell>
-          </TableRow>
+          {data?.products.map((producto) => (
+            <TableRow key={producto.id}>
+              <TableCell>
+                <img
+                  src={producto.images[0]}
+                  alt={producto.title}
+                  className="w-20 h-20 object-cover rounded-md"
+                />
+              </TableCell>
+              <TableCell>
+                <Link
+                  to={`/admin/producto/${producto.id}`}
+                  className="hover:text-blue-500 underline"
+                >
+                  {producto.title}
+                </Link>
+              </TableCell>
+              <TableCell>{formatoMoneda(producto.price)}</TableCell>
+              <TableCell>
+                {producto.gender === "men"
+                  ? "Hombre"
+                  : producto.gender === "women"
+                    ? "Mujer"
+                    : producto.gender === "kid"
+                      ? "Niño"
+                      : "unisexo"}
+              </TableCell>
+              <TableCell>{producto.stock}</TableCell>
+              <TableCell>{producto.sizes.join(",")}</TableCell>
+              <TableCell className="text-right">
+                <Link to={`/admin/producto/${producto.id}`}>
+                  <PencilIcon className="w-4 h-4 mr-1 text-blue-500" />
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
 
