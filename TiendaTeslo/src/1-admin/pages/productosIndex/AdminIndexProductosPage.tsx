@@ -16,6 +16,7 @@ import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 import { formatoMoneda } from "@/lib/FormatoMoneda";
 
 export function AdminIndexProductosPage() {
+  debugger;
   const { data, isLoading } = useProductos();
   if (isLoading) {
     return <Cargando />;
