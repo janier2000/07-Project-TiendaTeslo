@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import { Plus, SaveAll, Tag, Upload, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/interfaces/productoInterface";
+import type { Product, Size } from "@/interfaces/productoInterface";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
   // onSubmit: (productLike: Partial<Product>) => Promise<void>;
 }
 
-const tallasDisponible = ["XS", "S", "M", "L", "XL", "XXL"];
+const LstTallas: Size[] = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const FormularioProducto = ({
   titulo,
@@ -28,7 +28,7 @@ export const FormularioProducto = ({
   // onSubmit,
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
-
+  const labelInputRef = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
@@ -42,63 +42,36 @@ export const FormularioProducto = ({
 
   // console.log(producto);
 
-  function handleInputChange(field: keyof Product, value: string | number) {
-    // setProduct((prev) => ({ ...prev, [field]: value }));
+  const tallasSeleccionadas = watch("sizes");
+  const etiquetasSeleccionadas = watch("tags");
+  const currentStock = watch("stock");
+
+  function handleClickAgregarTalla(talla: Size) {
+    const tallaSet = new Set(getValues("sizes"));
+    tallaSet.add(talla);
+    setValue("sizes", Array.from(tallaSet));
   }
 
-  function handleAgregarTag() {
-    // if (newTag.trim() && !producto.tags.includes(newTag.trim())) {
-    // setProduct((prev) => ({
-    //   ...prev,
-    //   tags: [...prev.tags, newTag.trim()],
-    // }));
-    // setNewTag("");
+  function handleClickEliminarTalla(talla: Size) {
+    const tallaSet = new Set(getValues("sizes"));
+    tallaSet.delete(talla);
+    setValue("sizes", Array.from(tallaSet));
   }
 
-  function handleEliminarTag(tagToRemove: string) {
-    // setProduct((prev) => ({
-    //   ...prev,
-    //   tags: prev.tags.filter((tag) => tag !== tagToRemove),
-    // }));
+  function handleClickAgregarEtiqueta() {
+    const tagAux = labelInputRef.current!.value;
+    if (tagAux === "") {
+      return;
+    }
+    const etiquetaSet = new Set(getValues("tags"));
+    etiquetaSet.add(tagAux);
+    setValue("tags", Array.from(etiquetaSet));
   }
 
-  function handleClickAgregarTalla(size: string) {
-    // if (!producto.sizes.includes(size)) {
-    // setProduct((prev) => ({
-    //   ...prev,
-    //   sizes: [...prev.sizes, size],
-    // }));
-    // }
-  }
-
-  function handleClickEliminarTalla(sizeToRemove: string) {
-    // setProduct((prev) => ({
-    //   ...prev,
-    //   sizes: prev.sizes.filter((size) => size !== sizeToRemove),
-    // }));
-  }
-
-  function handleArrastrar(e: React.DragEvent) {
-    // e.preventDefault();
-    // e.stopPropagation();
-    // if (e.type === "dragenter" || e.type === "dragover") {
-    //   setDragActive(true);
-    // } else if (e.type === "dragleave") {
-    //   setDragActive(false);
-    // }
-  }
-
-  function handleSoltar(e: React.DragEvent) {
-    // e.preventDefault();
-    // e.stopPropagation();
-    // setDragActive(false);
-    // const archivo = e.dataTransfer.files;
-    // //console.log(archivo);
-  }
-
-  function handleChangeArchivo(e: React.ChangeEvent<HTMLInputElement>) {
-    // const archivo = e.target.files;
-    // //console.log(archivo);
+  function handleClickEliminarEtiqueta(etiqueta: string) {
+    const etiquetaSet = new Set(getValues("tags"));
+    etiquetaSet.delete(etiqueta);
+    setValue("tags", Array.from(etiquetaSet));
   }
 
   function onSubmit(productoOK: Product) {
@@ -118,7 +91,7 @@ export const FormularioProducto = ({
             </Link>
           </Button>
 
-          <Button>
+          <Button type="submit">
             <SaveAll className="w-4 h-4" />
             Guardar cambios
           </Button>
@@ -170,6 +143,7 @@ export const FormularioProducto = ({
                       placeholder="Precio del producto"
                       {...register("price", {
                         required: true,
+                        min: 1,
                       })}
                       className={cn(
                         "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
@@ -192,9 +166,9 @@ export const FormularioProducto = ({
                     <input
                       type="number"
                       placeholder="Stock del producto"
-                      value={producto.stock}
                       {...register("stock", {
                         required: true,
+                        min: 1,
                       })}
                       className={cn(
                         "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
@@ -217,13 +191,19 @@ export const FormularioProducto = ({
                   </label>
                   <input
                     type="text"
-                    value={producto.slug}
+                    placeholder="Slug del producto"
                     {...register("slug", {
                       required: true,
+                      validate: (value) =>
+                        !/\s/.test(value) ||
+                        "El slug no puede contener espacios en blanco",
                     })}
-                    // onChange={(e) => handleInputChange("slug", e.target.value)}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Slug del producto"
+                    className={cn(
+                      "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+                      {
+                        "border-red-500": errors.slug,
+                      },
+                    )}
                   />
                   {errors.slug && (
                     <p className="text-red-500 text-sm">
@@ -258,6 +238,7 @@ export const FormularioProducto = ({
                     Descripción del producto
                   </label>
                   <textarea
+                    placeholder="Descripción del producto"
                     {...register("description", { required: true })}
                     rows={5}
                     className={cn(
@@ -266,7 +247,6 @@ export const FormularioProducto = ({
                         "border-red-500": errors.description,
                       },
                     )}
-                    placeholder="Descripción del producto"
                   />
                   {errors.description && (
                     <p className="text-red-500 text-sm">
@@ -277,7 +257,7 @@ export const FormularioProducto = ({
               </div>
             </div>
 
-            {/* Sizes */}
+            {/* talla */}
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
               <h2 className="text-xl font-semibold text-slate-800 mb-6">
                 Tallas disponibles
@@ -285,15 +265,20 @@ export const FormularioProducto = ({
 
               <div className="space-y-4">
                 <div className="flex flex-wrap gap-2">
-                  {producto.sizes.map((size) => (
+                  {LstTallas.map((size) => (
                     <span
                       key={size}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 border border-blue-200"
+                      className={cn(
+                        "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 border border-blue-200",
+                        {
+                          hidden: !tallasSeleccionadas.includes(size),
+                        },
+                      )}
                     >
                       {size}
                       <button
                         onClick={() => handleClickEliminarTalla(size)}
-                        className="ml-2 text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                        className="cursor-pointer ml-2 text-blue-600 hover:text-blue-800 transition-colors duration-200"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -305,18 +290,19 @@ export const FormularioProducto = ({
                   <span className="text-sm text-slate-600 mr-2">
                     Añadir tallas:
                   </span>
-                  {tallasDisponible.map((talla) => (
+                  {LstTallas.map((size) => (
                     <button
-                      key={talla}
-                      onClick={() => handleClickAgregarTalla(talla)}
-                      // disabled={producto.sizes.includes(talla)}
-                      // className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
-                      // producto.sizes.includes(talla)
-                      //   ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                      //   : "bg-slate-200 text-slate-700 hover:bg-slate-300 cursor-pointer"
-                      // // }`}
+                      type="button"
+                      key={size}
+                      onClick={() => handleClickAgregarTalla(size)}
+                      disabled={getValues("sizes").includes(size)}
+                      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
+                        tallasSeleccionadas.includes(size)
+                          ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                          : "bg-slate-200 text-slate-700 hover:bg-slate-300 cursor-pointer"
+                      }`}
                     >
-                      {talla}
+                      {size}
                     </button>
                   ))}
                 </div>
@@ -331,7 +317,7 @@ export const FormularioProducto = ({
 
               <div className="space-y-4">
                 <div className="flex flex-wrap gap-2">
-                  {producto.tags.map((tag) => (
+                  {etiquetasSeleccionadas.map((tag) => (
                     <span
                       key={tag}
                       className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200"
@@ -339,7 +325,7 @@ export const FormularioProducto = ({
                       <Tag className="h-3 w-3 mr-1" />
                       {tag}
                       <button
-                        onClick={() => handleEliminarTag(tag)}
+                        onClick={() => handleClickEliminarEtiqueta(tag)}
                         className="ml-2 text-green-600 hover:text-green-800 transition-colors duration-200"
                       >
                         <X className="h-3 w-3" />
@@ -350,15 +336,20 @@ export const FormularioProducto = ({
 
                 <div className="flex gap-2">
                   <input
+                    ref={labelInputRef}
                     type="text"
-                    // value={newTag}
-                    // onChange={(e) => setNewTag(e.target.value)}
-                    // onKeyDown={(e) => e.key === "Enter" && handleAgregarTag()}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " " || e.key === ",") {
+                        e.preventDefault();
+                        handleClickAgregarEtiqueta();
+                        labelInputRef.current!.value = "";
+                      }
+                    }}
                     placeholder="Añadir nueva etiqueta..."
                     className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   />
                   <Button
-                    onClick={handleAgregarTag}
+                    onClick={handleClickAgregarEtiqueta}
                     className="px-4 py-2rounded-lg "
                   >
                     <Plus className="h-4 w-4" />
