@@ -17,8 +17,9 @@ export function useProducto(id: string) {
   const mutation = useMutation({
     mutationFn: MantenimientoProductoAccion,
     onSuccess: function (producto: Product) {
-      // Invalidar caché
+      // Invalidar caché para que los datos se refresquen en las queries que dependen de este producto
       console.log("Producto mantenimiento:", producto);
+      //este sirve para actualizar la lista de productos en caché después de un mantenimiento
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({
         queryKey: ["product", { id: producto.id }],
