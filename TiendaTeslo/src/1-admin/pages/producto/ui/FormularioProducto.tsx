@@ -44,7 +44,7 @@ export const FormularioProducto = ({
 
   const tallasSeleccionadas = watch("sizes");
   const etiquetasSeleccionadas = watch("tags");
-  const currentStock = watch("stock");
+  const ExistenciasActuales = watch("stock");
 
   function handleClickAgregarTalla(talla: Size) {
     const tallaSet = new Set(getValues("sizes"));
@@ -450,19 +450,19 @@ export const FormularioProducto = ({
                     Inventario
                   </span>
                   <span
-                  // className={`px-2 py-1 text-xs font-medium rounded-full ${
-                  //   producto.stock > 5
-                  //     ? "bg-green-100 text-green-800"
-                  //     : producto.stock > 0
-                  //       ? "bg-yellow-100 text-yellow-800"
-                  //       : "bg-red-100 text-red-800"
-                  // }`}
+                    className={`px-2 py-1 text-xs font-medium rounded-full ${
+                      ExistenciasActuales > 5
+                        ? "bg-green-100 text-green-800"
+                        : ExistenciasActuales > 0
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
+                    }`}
                   >
-                    {/* {producto.stock > 5
+                    {ExistenciasActuales > 5
                       ? "En stock"
-                      : producto.stock > 0
+                      : ExistenciasActuales > 0
                         ? "Bajo stock"
-                        : "Sin stock"} */}
+                        : "Sin stock"}
                   </span>
                 </div>
 
@@ -471,7 +471,7 @@ export const FormularioProducto = ({
                     Imágenes
                   </span>
                   <span className="text-sm text-slate-600">
-                    {/* {producto.images.length} imágenes */}
+                    {producto.images.length} imágenes
                   </span>
                 </div>
 
@@ -480,7 +480,7 @@ export const FormularioProducto = ({
                     Tallas disponibles
                   </span>
                   <span className="text-sm text-slate-600">
-                    {/* {producto.sizes.length} tallas */}
+                    {tallasSeleccionadas.length} tallas
                   </span>
                 </div>
               </div>
