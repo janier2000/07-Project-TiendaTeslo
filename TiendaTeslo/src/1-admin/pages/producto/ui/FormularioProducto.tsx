@@ -12,7 +12,7 @@ interface Props {
   titulo: string;
   subTitulo: string;
   producto: Product;
-  // estaPendiente: boolean;
+  estaPendiente: boolean;
 
   // metodo
   onSubmit: (productLike: Partial<Product>) => Promise<void>;
@@ -24,7 +24,7 @@ export const FormularioProducto = ({
   titulo,
   subTitulo,
   producto,
-  // estaPendiente,
+  estaPendiente,
   onSubmit,
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
@@ -84,14 +84,14 @@ export const FormularioProducto = ({
       <div className="flex justify-between items-center">
         <AdminTitulo titulo={titulo} subTitulo={subTitulo} />
         <div className="flex justify-end mb-10 gap-4">
-          <Button variant="outline">
+          <Button variant="outline" type="button">
             <Link to="/admin/producto" className="flex items-center gap-2">
               <X className="w-4 h-4" />
               Cancelar
             </Link>
           </Button>
 
-          <Button type="submit">
+          <Button type="submit" disabled={estaPendiente}>
             <SaveAll className="w-4 h-4" />
             Guardar cambios
           </Button>

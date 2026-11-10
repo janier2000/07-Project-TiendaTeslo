@@ -51,13 +51,12 @@ export function AdminProductoPage() {
   }
 
   return (
-    <div>
-      <FormularioProducto
-        titulo={titulo}
-        subTitulo={subTitulo}
-        producto={producto}
-        onSubmit={handleSubmit}
-      />
-    </div>
+    <FormularioProducto
+      titulo={titulo}
+      subTitulo={subTitulo}
+      producto={producto}
+      onSubmit={handleSubmit}
+      estaPendiente={mutation.isPending}
+    />
   );
 }
