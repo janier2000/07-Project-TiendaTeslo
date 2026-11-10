@@ -1,3 +1,4 @@
+npm run start:dev
 localhost:3000/api
 localhost:3000/api/products
 
@@ -47,5 +48,8 @@ npm i sonner
 
 -------
 npm i zustand
+
+------
+npm install react-hook-form
 
 
