@@ -16,15 +16,15 @@ export function useProducto(id: string) {
 
   const mutation = useMutation({
     mutationFn: MantenimientoProductoAccion,
-    onSuccess: (product: Product) => {
+    onSuccess: function (producto: Product) {
       // Invalidar caché
+      console.log("Producto mantenimiento:", producto);
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({
-        queryKey: ["product", { id: product.id }],
+        queryKey: ["product", { id: producto.id }],
       });
-
       // Actualizar queryData
-      queryClient.setQueryData(["products", { id: product.id }], product);
+      queryClient.setQueryData(["products", { id: producto.id }], producto);
     },
   });
 

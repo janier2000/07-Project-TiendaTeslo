@@ -2,21 +2,21 @@ import { sleep } from "@/lib/sleep";
 import { tesloApi } from "@/api/tesloApi";
 import type { Product } from "@/interfaces/productoInterface";
 
-export const MantenimientoProductoAccion = async (
+export async function MantenimientoProductoAccion(
   productoParcial: Partial<Product>,
-): Promise<Product> => {
+): Promise<Product> {
   await sleep(1500);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, user, images = [], ...productoAux } = productoParcial;
+  const { id, user, images = [], ...objProducto } = productoParcial;
   const estaCreando = id === "new";
 
-  productoAux.stock = Number(productoAux.stock || 0);
-  productoAux.price = Number(productoAux.price || 0);
+  objProducto.stock = Number(objProducto.stock || 0);
+  objProducto.price = Number(objProducto.price || 0);
 
   const { data } = await tesloApi<Product>({
     url: estaCreando ? "/products" : `/products/${id}`,
     method: estaCreando ? "POST" : "PATCH",
-    data: productoAux,
+    data: objProducto,
   });
 
   return {
@@ -26,4 +26,4 @@ export const MantenimientoProductoAccion = async (
       return `${import.meta.env.VITE_API_URL}/files/product/${image}`;
     }),
   };
-};
+}

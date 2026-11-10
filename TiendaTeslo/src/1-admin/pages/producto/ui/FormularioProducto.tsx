@@ -14,8 +14,8 @@ interface Props {
   producto: Product;
   // estaPendiente: boolean;
 
-  // // metodos
-  // onSubmit: (productLike: Partial<Product>) => Promise<void>;
+  // metodo
+  onSubmit: (productLike: Partial<Product>) => Promise<void>;
 }
 
 const LstTallas: Size[] = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -25,7 +25,7 @@ export const FormularioProducto = ({
   subTitulo,
   producto,
   // estaPendiente,
-  // onSubmit,
+  onSubmit,
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
@@ -59,12 +59,12 @@ export const FormularioProducto = ({
   }
 
   function handleClickAgregarEtiqueta() {
-    const tagAux = labelInputRef.current!.value;
-    if (tagAux === "") {
+    const etiquetaAux = labelInputRef.current!.value;
+    if (etiquetaAux === "") {
       return;
     }
     const etiquetaSet = new Set(getValues("tags"));
-    etiquetaSet.add(tagAux);
+    etiquetaSet.add(etiquetaAux);
     setValue("tags", Array.from(etiquetaSet));
   }
 
@@ -74,10 +74,10 @@ export const FormularioProducto = ({
     setValue("tags", Array.from(etiquetaSet));
   }
 
-  function onSubmit(productoOK: Product) {
-    debugger;
-    console.log("onSumit", productoOK);
-  }
+  // function onSubmit(productoOK: Product) {
+  //   debugger;
+  //   console.log("onSumit", productoOK);
+  // }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
