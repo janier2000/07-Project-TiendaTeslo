@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import { Plus, SaveAll, Tag, Upload, X } from "lucide-react";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/interfaces/productoInterface";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
@@ -17,7 +18,7 @@ interface Props {
   // onSubmit: (productLike: Partial<Product>) => Promise<void>;
 }
 
-const tallasDisponible = ["XS", "XS", "S", "M", "L", "XL", "XXL", "XXL"];
+const tallasDisponible = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const FormularioProducto = ({
   titulo,
@@ -39,7 +40,7 @@ export const FormularioProducto = ({
     defaultValues: producto,
   });
 
-  console.log(producto);
+  // console.log(producto);
 
   function handleInputChange(field: keyof Product, value: string | number) {
     // setProduct((prev) => ({ ...prev, [field]: value }));
@@ -100,8 +101,13 @@ export const FormularioProducto = ({
     // //console.log(archivo);
   }
 
+  function onSubmit(productoOK: Product) {
+    debugger;
+    console.log("onSumit", productoOK);
+  }
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-between items-center">
         <AdminTitulo titulo={titulo} subTitulo={subTitulo} />
         <div className="flex justify-end mb-10 gap-4">
@@ -136,12 +142,22 @@ export const FormularioProducto = ({
                   </label>
                   <input
                     type="text"
+                    placeholder="Título del producto"
                     {...register("title", {
                       required: true,
                     })}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Título del producto"
+                    className={cn(
+                      "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+                      {
+                        "border-red-500": errors.title,
+                      },
+                    )}
                   />
+                  {errors.title && (
+                    <p className="text-red-500 text-sm">
+                      El título es requerido
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -151,13 +167,22 @@ export const FormularioProducto = ({
                     </label>
                     <input
                       type="number"
-                      value={producto.price}
-                      onChange={(e) =>
-                        handleInputChange("price", parseFloat(e.target.value))
-                      }
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Precio del producto"
+                      {...register("price", {
+                        required: true,
+                      })}
+                      className={cn(
+                        "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+                        {
+                          "border-red-500": errors.price,
+                        },
+                      )}
                     />
+                    {errors.price && (
+                      <p className="text-red-500 text-sm">
+                        El precio debe de ser mayor a 0
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -166,13 +191,23 @@ export const FormularioProducto = ({
                     </label>
                     <input
                       type="number"
-                      value={producto.stock}
-                      onChange={(e) =>
-                        handleInputChange("stock", parseInt(e.target.value))
-                      }
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       placeholder="Stock del producto"
+                      value={producto.stock}
+                      {...register("stock", {
+                        required: true,
+                      })}
+                      className={cn(
+                        "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+                        {
+                          "border-red-500": errors.stock,
+                        },
+                      )}
                     />
+                    {errors.stock && (
+                      <p className="text-red-500 text-sm">
+                        El inventario debe de ser mayor a 0
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -183,10 +218,18 @@ export const FormularioProducto = ({
                   <input
                     type="text"
                     value={producto.slug}
-                    onChange={(e) => handleInputChange("slug", e.target.value)}
+                    {...register("slug", {
+                      required: true,
+                    })}
+                    // onChange={(e) => handleInputChange("slug", e.target.value)}
                     className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     placeholder="Slug del producto"
                   />
+                  {errors.slug && (
+                    <p className="text-red-500 text-sm">
+                      {errors.slug.message || "El slug es requerido."}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -195,9 +238,12 @@ export const FormularioProducto = ({
                   </label>
                   <select
                     value={producto.gender}
-                    onChange={(e) =>
-                      handleInputChange("gender", e.target.value)
-                    }
+                    {...register("gender", {
+                      required: true,
+                    })}
+                    // onChange={(e) =>
+                    //   handleInputChange("gender", e.target.value)
+                    // }
                     className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   >
                     <option value="men">Hombre</option>
@@ -212,14 +258,21 @@ export const FormularioProducto = ({
                     Descripción del producto
                   </label>
                   <textarea
-                    value={producto.description}
-                    onChange={(e) =>
-                      handleInputChange("description", e.target.value)
-                    }
+                    {...register("description", { required: true })}
                     rows={5}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    className={cn(
+                      "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200",
+                      {
+                        "border-red-500": errors.description,
+                      },
+                    )}
                     placeholder="Descripción del producto"
                   />
+                  {errors.description && (
+                    <p className="text-red-500 text-sm">
+                      {"La descripción es requerida."}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -444,6 +497,6 @@ export const FormularioProducto = ({
           </div>
         </div>
       </div>
-    </>
+    </form>
   );
 };
