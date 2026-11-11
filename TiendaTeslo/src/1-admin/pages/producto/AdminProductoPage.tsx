@@ -21,8 +21,11 @@ export function AdminProductoPage() {
       ? "Aquí puedes crear un nuevo producto."
       : "Aquí puedes editar el producto.";
 
-  const handleSubmit = async function (productoParcial: Partial<Product>) {
+  const handleSubmit = async function (
+    productoParcial: Partial<Product> & { ArchivosTemp?: File[] },
+  ) {
     debugger;
+    console.log(productoParcial);
     await mutation.mutateAsync(productoParcial, {
       onSuccess: (data) => {
         debugger;

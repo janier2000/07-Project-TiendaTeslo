@@ -1,24 +1,27 @@
-import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
+import { useRef, useState, useEffect } from "react";
 import { Plus, SaveAll, Tag, Upload, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import type { Product, Size } from "@/interfaces/productoInterface";
 import { AdminTitulo } from "@/1-admin/components/AdminTitulo";
+import type { Product, Size } from "@/interfaces/productoInterface";
 
+const LstTallas: Size[] = ["XS", "S", "M", "L", "XL", "XXL"];
 interface Props {
   titulo: string;
   subTitulo: string;
   producto: Product;
   estaPendiente: boolean;
-
   // metodo
-  onSubmit: (productLike: Partial<Product>) => Promise<void>;
+  onSubmit: (
+    productoparcial: Partial<Product> & { ArchivosTemp?: File[] },
+  ) => Promise<void>;
 }
-
-const LstTallas: Size[] = ["XS", "S", "M", "L", "XL", "XXL"];
+interface FormInputs extends Product {
+  ArchivosTemp?: File[];
+}
 
 export const FormularioProducto = ({
   titulo,
@@ -27,9 +30,6 @@ export const FormularioProducto = ({
   estaPendiente,
   onSubmit,
 }: Props) => {
-  const [dragActive, setDragActive] = useState(false);
-  const labelInputRef = useRef<HTMLInputElement>(null);
-  const [lstArchivos, setlstArchivos] = useState<File[]>([]);
   const {
     register,
     handleSubmit,
@@ -37,15 +37,19 @@ export const FormularioProducto = ({
     getValues,
     setValue,
     watch,
-  } = useForm({
+  } = useForm<FormInputs>({
     defaultValues: producto,
   });
-
-  // console.log(producto);
-
+  const [dragActive, setDragActive] = useState(false);
+  const [lstArchivos, setlstArchivos] = useState<File[]>([]);
+  const labelInputRef = useRef<HTMLInputElement>(null);
   const tallasSeleccionadas = watch("sizes");
   const etiquetasSeleccionadas = watch("tags");
   const ExistenciasActuales = watch("stock");
+
+  useEffect(() => {
+    setlstArchivos([]);
+  }, [producto]);
 
   function handleClickAgregarTalla(talla: Size) {
     const tallaSet = new Set(getValues("sizes"));
@@ -93,11 +97,10 @@ export const FormularioProducto = ({
     if (!archivos) {
       return;
     }
-
     setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
-    // const currentFiles = getValues("files") || [];
-    // setValue("files", [...currentFiles, ...Array.from(archivos)]);
-    // setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
+    const archivosActuales = getValues("ArchivosTemp") || [];
+    setValue("ArchivosTemp", [...archivosActuales, ...Array.from(archivos)]);
+    setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
   }
 
   function handleChangeArchivo(e: React.ChangeEvent<HTMLInputElement>) {
@@ -105,16 +108,10 @@ export const FormularioProducto = ({
     if (!archivos) {
       return;
     }
-
     setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
-    // const currentFiles = getValues("files") || [];
-    // setValue("files", [...currentFiles, ...Array.from(archivos)]);
+    const archivosActuales = getValues("ArchivosTemp") || [];
+    setValue("ArchivosTemp", [...archivosActuales, ...Array.from(archivos)]);
   }
-
-  // function onSubmit(productoOK: Product) {
-  //   debugger;
-  //   console.log("onSumit", productoOK);
-  // }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
