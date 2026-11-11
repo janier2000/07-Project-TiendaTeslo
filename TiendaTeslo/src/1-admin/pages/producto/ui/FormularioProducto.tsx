@@ -23,13 +23,16 @@ interface FormInputs extends Product {
   ArchivosTemp?: File[];
 }
 
-export const FormularioProducto = ({
+export function FormularioProducto({
   titulo,
   subTitulo,
   producto,
   estaPendiente,
   onSubmit,
-}: Props) => {
+}: Props) {
+  const [dragActive, setDragActive] = useState(false);
+  const [lstArchivos, setlstArchivos] = useState<File[]>([]);
+  const labelInputRef = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
@@ -40,9 +43,6 @@ export const FormularioProducto = ({
   } = useForm<FormInputs>({
     defaultValues: producto,
   });
-  const [dragActive, setDragActive] = useState(false);
-  const [lstArchivos, setlstArchivos] = useState<File[]>([]);
-  const labelInputRef = useRef<HTMLInputElement>(null);
   const tallasSeleccionadas = watch("sizes");
   const etiquetasSeleccionadas = watch("tags");
   const ExistenciasActuales = watch("stock");
@@ -545,4 +545,4 @@ export const FormularioProducto = ({
       </div>
     </form>
   );
-};
+}

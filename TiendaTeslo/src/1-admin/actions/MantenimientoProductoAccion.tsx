@@ -27,10 +27,20 @@ export async function MantenimientoProductoAccion(
     images.push(...lstImagesNombre);
   }
 
+  const imagenesAux = images.map(function (image) {
+    if (image.includes("http")) {
+      return image.split("/").pop() || "";
+    }
+    return image;
+  });
+
   const { data } = await tesloApi<Product>({
     url: estaCreando ? "/products" : `/products/${id}`,
     method: estaCreando ? "POST" : "PATCH",
-    data: objProducto,
+    data: {
+      ...objProducto,
+      images: imagenesAux,
+    },
   });
 
   return {
