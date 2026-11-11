@@ -20,6 +20,9 @@ https://app.quicktype.io/
 https://marketplace.visualstudio.com/items?itemName=quicktype.quicktype
 
 
+postgresql://neondb_owner:npg_jRq3fBJ0iVGw@ep-twilight-rice-be7puk1o-pooler.c-9.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+
 /////////////////////////////////////
 -----------------------------
 paso para isntalar
