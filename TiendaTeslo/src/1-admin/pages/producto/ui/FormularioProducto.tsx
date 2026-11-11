@@ -29,6 +29,7 @@ export const FormularioProducto = ({
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
+  const [archivos, setArchivos] = useState<File[]>([]);
   const {
     register,
     handleSubmit,
@@ -72,6 +73,43 @@ export const FormularioProducto = ({
     const etiquetaSet = new Set(getValues("tags"));
     etiquetaSet.delete(etiqueta);
     setValue("tags", Array.from(etiquetaSet));
+  }
+
+  function handleArrastrar(e: React.DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  }
+
+  function handleSoltar(e: React.DragEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    const archivos = e.dataTransfer.files;
+
+    if (!archivos) {
+      return;
+    }
+
+    setArchivos((prev) => [...prev, ...Array.from(archivos)]);
+
+    const currentFiles = getValues("files") || [];
+    setValue("files", [...currentFiles, ...Array.from(archivos)]);
+  }
+
+  function handleChangeArchivo(e: React.ChangeEvent<HTMLInputElement>) {
+    const archivos = e.target.files;
+    if (!archivos) {
+      return;
+    }
+
+    setArchivos((prev) => [...prev, ...Array.from(archivos)]);
+    const currentFiles = getValues("files") || [];
+    setValue("files", [...currentFiles, ...Array.from(archivos)]);
   }
 
   // function onSubmit(productoOK: Product) {
@@ -374,17 +412,17 @@ export const FormularioProducto = ({
                     ? "border-blue-400 bg-blue-50"
                     : "border-slate-300 hover:border-slate-400"
                 }`}
-                // onDragEnter={handleArrastrar}
-                // onDragLeave={handleArrastrar}
-                // onDragOver={handleArrastrar}
-                // onDrop={handleSoltar}
+                onDragEnter={handleArrastrar}
+                onDragLeave={handleArrastrar}
+                onDragOver={handleArrastrar}
+                onDrop={handleSoltar}
               >
                 <input
                   type="file"
                   multiple
                   accept="image/*"
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  // onChange={handleChangeArchivo}
+                  onChange={handleChangeArchivo}
                 />
                 <div className="space-y-4">
                   <Upload className="mx-auto h-12 w-12 text-slate-400" />
