@@ -29,7 +29,7 @@ export const FormularioProducto = ({
 }: Props) => {
   const [dragActive, setDragActive] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
-  const [archivos, setArchivos] = useState<File[]>([]);
+  const [lstArchivos, setlstArchivos] = useState<File[]>([]);
   const {
     register,
     handleSubmit,
@@ -90,15 +90,14 @@ export const FormularioProducto = ({
     e.stopPropagation();
     setDragActive(false);
     const archivos = e.dataTransfer.files;
-
     if (!archivos) {
       return;
     }
 
-    setArchivos((prev) => [...prev, ...Array.from(archivos)]);
-
-    const currentFiles = getValues("files") || [];
-    setValue("files", [...currentFiles, ...Array.from(archivos)]);
+    setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
+    // const currentFiles = getValues("files") || [];
+    // setValue("files", [...currentFiles, ...Array.from(archivos)]);
+    // setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
   }
 
   function handleChangeArchivo(e: React.ChangeEvent<HTMLInputElement>) {
@@ -107,9 +106,9 @@ export const FormularioProducto = ({
       return;
     }
 
-    setArchivos((prev) => [...prev, ...Array.from(archivos)]);
-    const currentFiles = getValues("files") || [];
-    setValue("files", [...currentFiles, ...Array.from(archivos)]);
+    setlstArchivos((prev) => [...prev, ...Array.from(archivos)]);
+    // const currentFiles = getValues("files") || [];
+    // setValue("files", [...currentFiles, ...Array.from(archivos)]);
   }
 
   // function onSubmit(productoOK: Product) {
@@ -440,7 +439,7 @@ export const FormularioProducto = ({
                 </div>
               </div>
 
-              {/* Current Images */}
+              {/* Imágenes actuales */}
               <div className="mt-6 space-y-3">
                 <h3 className="text-sm font-medium text-slate-700">
                   Imágenes actuales
@@ -462,6 +461,27 @@ export const FormularioProducto = ({
                         {image}
                       </p>
                     </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Imágenes por cargar */}
+              <div
+                className={cn("mt-6 space-y-3", {
+                  hidden: lstArchivos.length === 0,
+                })}
+              >
+                <h3 className="text-sm font-medium text-slate-700">
+                  Imágenes por cargar
+                </h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {lstArchivos.map((file, index) => (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt="Product"
+                      key={index}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
                   ))}
                 </div>
               </div>
